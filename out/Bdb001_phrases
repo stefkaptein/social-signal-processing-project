@@ -1,0 +1,1025 @@
+	StartTime	EndTime	Participant	Text
+0	0.056	1.861	me011	Yeah, we had a long discussion about
+1	2.674	6.315	me011	how much w- how easy we want to make it for people to bleep things out. So -
+2	6.260	6.864	fe016	Right.
+3	7.516	8.757	fe016	O_K. So this is -
+4	8.169	11.100	me011	Morgan wants to make it hard.
+5	9.751	13.549	fe016	The, uh, counter is not
+6	13.210	14.476	me018	It - it doesn't -
+7	14.457	15.844	fe016	It doesn't like me, but -
+8	16.383	19.490	me011	Did - did - did it - ? I didn't even
+9	17.937	20.021	me018	It didn't move yesterday either when I started it.
+10	19.536	20.461	fe016	Oh, it didn't? O_K.
+11	20.260	20.738	me011	So.
+12	20.480	21.926	me018	So I don't know if it doesn't like both of us -
+13	20.716	25.543	fe016	It didn't move on me on one other meeting and it did on one and both recorded the same
+14	21.356	21.992	me011	Channel three?
+15	22.525	23.410	me011	Channel three?
+16	25.840	29.211	me018	You know, I discovered something yesterday on these, um, wireless ones.
+17	28.333	30.496	me001	Channel two.
+18	28.859	29.472	me011	Mm-hmm?
+19	29.818	33.430	me018	You can tell if it's picking up
+20	32.823	35.530	me011	Yeah, it has a little indicator on it - on the A_F.
+21	33.957	34.639	me018	Mm-hmm.
+22	34.187	34.943	fe016	Oh, really?
+23	35.993	40.297	fe016	Oh that's - the gains I've left here as the sort of normal ones, but -
+24	36.669	44.968	me018	So if you - yeah, if you breathe under - breathe and then you see A_F go off, then you know
+25	44.734	47.514	fe016	Oh, that's good. Cuz we have a lot of breath noises.
+26	46.488	47.395	me011	Yep. Test.
+27	48.600	55.714	fe016	"In fact, if you listen to just the channels of people not talking, it's like """
+28	55.714	57.412	fe016	It's very disgust- Sorry.
+29	57.948	61.094	fe016	Exactly.
+30	61.094	67.030	fe016	So, um,
+31	67.490	72.152	fe016	really appreciate people coming, and
+32	73.111	77.303	fe016	gonna ask people to help with today is
+33	78.017	83.943	fe016	give input on what kinds of database format we should
+34	84.244	90.022	fe016	starting to link up things like word transcripts and annotations of word transcripts, so anything that
+35	90.022	94.158	fe016	transcribers or discourse coders or whatever put in the signal,
+36	94.158	100.561	fe016	with time-marks for, like, words and phone boundaries and all the stuff we get out of the forced alignments and the recognizer.
+37	101.129	103.861	fe016	So, we have this, um -
+38	112.019	116.860	me011	Yeah, I'm - I'm familiar with that. I mean, we - I sort of already have developed an X_M_L format
+39	113.179	114.700	fe016	um, which -
+40	114.408	115.049	me018	Can I see it?
+41	117.340	120.182	me011	for this sort of stuff. And so the only question -
+42	120.636	123.369	me011	is it the sort of thing that you want to use or not?
+43	123.597	125.709	me011	Have you looked at that? I mean, I had a web page up.
+44	127.472	131.596	fe016	I actually mostly need to be able to link up, or -
+45	127.834	128.201	me011	So -
+46	131.563	132.117	me011	You mean, this -
+47	131.596	134.662	fe016	I- it's - it's a question both of what the representation is and -
+48	133.679	136.370	me011	I guess I
+49	135.136	137.226	fe016	O_K, yeah. So you
+50	136.923	141.477	me011	Um, so - so it definitely had that as a concept. So tha- it has a single time-line,
+51	141.259	141.855	fe016	Mm-hmm.
+52	141.895	148.940	me011	and then you can have lots of different sections, each of which have I_Ds attached to it, and then you can refer from other sections to those I_Ds,
+53	149.237	150.122	me011	if you
+54	150.701	151.886	me011	So that, um -
+55	152.860	155.211	me011	so that you start with - with a
+56	157.700	158.998	me011	"""Time-line""."
+57	159.348	161.496	me011	And then you have a bunch of times.
+58	161.496	164.673	me011	I don't e- I don't remember
+59	164.687	166.230	fe016	Right, right.
+60	166.317	168.818	me011	"Yeah, ""T_ equals one point"
+61	169.801	171.142	me011	"three two"", uh -"
+62	171.142	174.098	me011	And then I - I also had optional things like accuracy,
+63	174.449	180.318	me011	"and then ""I_D equals T_ one, uh, one seven""."
+64	181.402	187.510	me011	I also wanted to - to be i- to be able to not specify specifically what the time was and just have a stamp.
+65	186.014	186.845	fe016	Right.
+66	189.839	194.543	me011	Yeah, so these are arbitrary, assigned by a program, not - not by a user. So you have a whole bunch of those.
+67	199.281	200.910	me011	"which has ""start"
+68	201.980	206.185	me011	"equals T_seventeen, end equals T_eighteen""."
+69	206.185	210.830	me011	So what
+70	211.358	217.266	me011	Right? But it ends at this T_eighteen, which may be somewhere else. We say there's another utterance.
+71	218.244	222.890	me011	We don't know what the t-
+72	225.265	225.644	mn017	Mmm.
+73	228.806	229.700	me011	O_K.
+74	231.170	232.109	me011	Yes, exactly.
+75	232.124	232.620	mn017	Yeah.
+76	233.516	237.050	me011	And then, uh - and then these
+77	240.261	247.430	me011	Right? So you could - you could have some sort of other - other tag later in the file that would be something like, um,
+78	248.569	250.360	me011	oh, I don't know,
+79	253.494	255.840	me011	"""noise-type equals"
+80	257.739	259.367	me011	"door-slam"". You know?"
+81	260.847	261.953	me011	And then, uh,
+82	262.359	267.790	me011	"you could either say ""time equals a particular time-mark"" or you could do other sorts of references."
+83	267.790	269.548	me011	So - or - or you might have a prosody -
+84	270.521	273.980	me011	"""Prosody"""
+85	273.440	276.299	fe016	It's an O_ instead of an I_, but the D_ is good.
+86	276.554	278.056	me011	You like the D_? That's a good D_.
+87	279.305	281.402	me011	you know, so you could have some sort of
+88	282.173	284.349	me011	and then you could have, um -
+89	284.349	288.780	me011	the utterance that it's
+90	289.419	291.943	fe016	O_K. So, I mean, that seems -
+91	292.916	293.695	fe016	that seems g-
+92	294.445	296.052	fe016	great for all of the
+93	297.500	300.310	fe016	encoding of things with time and,
+94	300.044	301.090	me011	Oh, well.
+95	300.710	301.123	fe016	um -
+96	305.027	311.325	fe016	uh, what d- what do you do with, say, a forced alignment?
+97	305.259	306.043	mn017	How- how-
+98	311.797	318.324	fe016	just conceptually, if you get, um, transcriptions where the words are staying
+99	318.606	324.537	fe016	but the time boundaries are changing, cuz you've got a new recognition output, or s- sort of - what's the, um,
+100	325.169	327.930	fe016	sequence of going from the
+101	328.346	333.434	fe016	waveforms that stay the same, the transcripts that may or may not change, and then the
+102	333.916	337.780	fe016	utterance which -
+103	336.996	342.309	mn017	That's actually very nicely handled here because you could - you could - all you'd have to change is the,
+104	338.247	338.912	fe016	Um.
+105	342.309	348.423	mn017	um, time-stamps in the time-line without - without, uh, changing the I_Ds.
+106	345.709	347.684	fe016	And you'd be able to propagate all of the -
+107	347.779	351.360	me011	Right. That's, the who- that's
+108	348.099	349.340	fe016	the information?
+109	353.230	355.340	me011	So that you can just change the
+110	357.746	358.438	me011	Yes.
+111	357.876	362.760	fe016	Yeah, yeah, especially at the
+112	361.184	363.602	me011	Yeah, this - I don't think I would do this for phone-level.
+113	363.513	364.370	fe016	Um -
+114	363.602	368.335	me011	I think for phone-level you want to use some sort of binary representation because it'll be too dense otherwise.
+115	367.409	375.974	fe016	O_K. So, if you were doing that and you had this sort of companion, uh, thing that gets called up for phone-level, uh, what would that look like? How would you - ?
+116	375.429	376.427	mn017	Why-
+117	378.191	384.146	mn017	Mmm. But - but why
+118	378.349	379.241	fe016	H- h-
+119	378.373	379.707	me011	an existing way of doing it.
+120	384.918	388.930	mn017	you know, barring
+121	387.566	394.006	me011	It's
+122	394.524	401.240	mn017	Oh, no. You would use it
+123	400.638	406.919	fe016	So you could have some file that configures how much information you want in your - in your X_M_L or something.
+124	406.818	412.388	me011	Right. I mean, you'd - y- I - I am imagining you'd have multiple
+125	407.470	410.153	fe016	Um, cuz th- it does get very bush- with -
+126	410.852	411.477	fe016	Right.
+127	418.194	419.670	me011	For word-level, it's alright.
+128	419.254	419.757	mn017	Mm-hmm.
+129	419.670	424.951	me011	For
+130	427.383	428.628	me018	Lattices are big, too.
+131	429.541	435.059	fe016	For every frame, you get a pitch value, and not only one pitch value but different kinds of pitch values depending on -
+132	440.231	441.201	fe016	Meaning - ?
+133	441.128	447.319	me011	Uh, that's a - well, or something like it. It's ICS- uh, ICSI has a format for frame-level representation of features.
+134	447.748	452.811	fe016	O_K. That you could call - that you would tie into this representation with like an I_D.
+135	448.130	448.980	me011	Um.
+136	451.077	451.565	me011	Right.
+137	452.645	457.695	me011	Right. Or - or there's a - there's a particular way in X_M_L to refer to external resources.
+138	453.662	454.255	fe016	And -
+139	457.759	458.313	fe016	O_K.
+140	458.363	461.828	me011	"So you would say ""refer to this external file""."
+141	462.464	465.227	me011	Um, so that external file wouldn't be in -
+142	463.347	464.830	fe016	So that might - that might work.
+143	464.964	469.414	me018	But what - what's the advantage of doing that versus just putting it into this format?
+144	470.374	470.786	me018	Uh-huh.
+145	474.250	479.540	me011	You don't want to do it with that - Anything at frame-level you had better encode binary or it's gonna be really painful.
+146	484.531	489.345	mn017	and, um, you know, c- decompress them on the fly if y- if space is really a concern.
+147	488.507	491.592	me018	I was thinking the advantage is that we can
+148	492.808	499.118	me011	you're talking about gigabyte-size files. You're gonna actually run out of space in your
+149	496.570	499.123	fe016	These are big files. These are really - I mean -
+150	499.620	502.850	me011	Right? Because you have a two-gigabyte limit on most O_Ss.
+151	508.360	510.966	mn017	Like phones, or syllables, or anything like that.
+152	509.429	511.848	fe016	Phones are every
+153	512.466	513.455	fe016	Or
+154	512.983	517.078	mn017	But - but - but
+155	517.540	519.869	mn017	So, you know, people don't -
+156	519.320	521.006	fe016	Yeah, but we actually -
+157	519.869	526.133	mn017	v- Look at it, words times the average - The average number of phones in an English word is, I don't know,
+158	526.810	530.612	mn017	So, look at it, t- number of words times
+159	528.869	532.509	fe016	Oh, so you mean
+160	532.460	532.863	me011	Yep.
+161	532.673	533.980	mn017	Exactly. Yeah.
+162	532.825	536.906	fe016	Yeah. O_K. That's true. But you do have to keep them in there. Y- yeah. O_K.
+163	539.653	540.275	fe016	O_K.
+164	541.503	542.156	fe016	So -
+165	542.893	546.125	me011	is too verbose. I would use something
+166	545.973	549.375	fe016	Do you - Are you familiar with it? I haven't seen this particular format, but -
+167	546.772	547.207	me011	So.
+168	548.212	552.500	mn017	I mean, I've - I've
+169	549.936	550.830	fe016	O_K.
+170	557.180	561.550	me011	It's whatever you want, actually. So that - what's nice about the P_file - It - i-
+171	558.042	558.576	me018	Right.
+172	562.145	567.921	me011	Built into it is the concept of
+173	568.277	573.043	me011	And then also
+174	573.318	573.907	fe016	Oh.
+175	573.461	580.191	me011	And it can take different types. So it - th- they don't all have to be floats. You know, you can have integers and you can have doubles, and all that sort of stuff.
+176	578.494	581.759	fe016	So that - that sounds - that sounds about what I w-
+177	580.705	581.218	me011	Um.
+178	581.821	587.724	me011	Right? And it has a header - it has a header format that
+179	587.951	595.019	me011	the only
+180	595.182	599.075	me011	even though they're always sequential.
+181	599.681	600.071	mn017	Hmm.
+182	599.697	604.379	me011	But it's still a
+183	603.685	609.200	fe016	You do? O_K. Is there some documentation on this somewhere? O_K, great. So,
+184	606.650	610.816	me011	Yeah, there's a ton of it. Man-pages and, uh, source code, and
+185	611.229	617.218	fe016	I mean, that sounds good. I - I was just looking for something - I'm not a database person,
+186	611.328	612.519	me011	me.
+187	617.732	622.600	fe016	you know, if we start using this we can give it out, other people can work on it, or -
+188	624.602	625.790	me011	But, uh -
+189	625.929	629.610	fe016	But it's
+190	627.799	634.800	me011	But it's been used here and - and, you know, we have a
+191	635.207	636.238	fe016	O_K.
+192	640.100	641.155	mn017	Yeah, th- we have -
+193	641.669	646.753	mn017	Actually, we - we use a generalization of the - the Sphere format.
+194	645.434	646.138	me018	Mmm.
+195	647.287	649.326	mn017	Um,
+196	650.341	654.490	mn017	Yeah, so there is something like that but it's, um, probably not as sophist-
+197	652.753	653.778	me018	And I think there's -
+198	653.224	657.372	me011	Well, what does H_T_
+199	655.842	657.451	mn017	They ha- it has its own -
+200	657.451	664.422	mn017	I mean, Entropic has their own feature format that's called, like, S_- S_D or some so- S_F or something like that.
+201	662.076	662.807	fe016	Yeah.
+202	663.980	664.582	me018	Yeah.
+203	664.370	667.036	me011	I'm just wondering, would it be worth while to use that
+204	666.882	670.610	fe016	Yeah. Th- this is exactly the kind of decision - It's just whatever -
+205	672.575	673.057	mn017	Right.
+206	673.174	674.630	me011	They generate their own.
+207	674.073	675.584	fe016	Actually, I -
+208	674.225	675.110	me018	Yeah.
+209	675.960	679.910	fe016	I just - you know, we - we've done this stuff on
+210	680.167	684.163	fe016	three or four places have asked for those prosodic
+211	684.163	687.088	fe016	uh, output of frame-by-frame. Which is fine,
+212	684.527	685.224	me011	Ah, right.
+213	687.505	692.660	fe016	but it gets unwieldy to go in and - and query these files with really huge files.
+214	692.676	693.309	me011	Right.
+215	693.060	697.815	fe016	I mean, we could
+216	695.211	696.916	me011	And a- and again, if you have a -
+217	697.510	701.656	me011	if you have a two-hour-long meeting, that's gonna -
+218	701.129	707.240	fe016	They're - they're fair- they're quite large. And these are for ten-minute Switchboard conversations, and -
+219	702.642	704.346	me011	Yeah, I mean, they'd be emo- enormous.
+220	705.940	706.443	me011	Right.
+221	707.240	713.161	fe016	So it's doable, it's just that you can only store a feature vector at frame-by-frame and it doesn't have any kind of,
+222	714.510	715.370	fe016	um -
+223	714.829	722.290	me018	Is - is the
+224	722.947	730.304	fe016	I - I don't know enough about what we're gonna do with the data.
+225	731.241	735.277	fe016	we can - that other people can use or adopt for
+226	735.886	742.470	fe016	encoding. And just,
+227	739.681	740.136	me011	Yeah.
+228	742.760	744.299	fe016	what it ends up being is you get
+229	744.828	750.570	fe016	features from the signal, and of course those change every time your alignments change. So you re-run a recognizer, you want to recompute
+230	751.219	756.930	fe016	your features, um, and then keep the database up to date. Or you change a word, or you change a
+231	754.757	755.256	me011	Right.
+232	757.170	760.195	fe016	utterance boundary segment, which is gonna happen a lot.
+233	760.697	766.077	fe016	And so I wanted something where
+234	766.887	770.845	fe016	wants to
+235	771.335	774.670	fe016	Um, it doesn't have to be
+236	775.403	776.815	fe016	you know, easy to use, and -
+237	778.966	782.004	me011	We should look at ATLAS, the NIST thing,
+238	781.899	782.347	mn017	Mmm.
+239	782.818	788.732	me011	and see if they have anything at that level. I mean, I'm not sure what to do about
+240	789.116	793.399	me011	I chose something that - Th- there are sort of two choices. Your - your file format
+241	794.033	795.123	me011	can know about -
+242	795.795	800.201	me011	know that you're talking about language
+243	803.728	806.327	me011	And then the application has to impose the structure on top.
+244	806.844	811.449	me011	So what it looked like ATLAS chose is,
+245	811.908	815.983	me011	nodes and links, and you have to interpret what they mean yourself.
+246	816.727	819.890	fe016	And why did you not choose that type of approach?
+247	820.618	821.224	fe016	O_K.
+248	822.231	828.660	me011	"if you're looking at a raw file to be - t- for the tags to say ""it's an utterance"", as opposed to the tag to say ""it's a link""."
+249	828.658	829.184	fe016	O_K.
+250	829.492	832.310	fe016	But other than that, are they compatible? I mean, you could sort of -
+251	829.851	830.345	me011	So, but -
+252	832.130	833.772	me011	Yeah, they're reasonably compatible.
+253	832.914	834.480	fe016	I mean, you - you could -
+254	833.745	835.550	me018	You could probably translate between
+255	835.530	837.590	fe016	Yeah, that's w- So, O_K.
+256	835.739	836.086	me011	Yep.
+257	838.598	845.164	me011	if we choose to use
+258	842.347	842.759	fe016	I don't -
+259	845.059	852.231	fe016	So this is what the meeting's about, just sort of how to - Um, cuz we need to come up with a database like this just to do our work. And I actually don't
+260	846.570	847.075	me011	Yeah.
+261	852.733	856.650	fe016	care, as long as it's something useful to other people, what we
+262	855.018	855.533	me011	Yeah.
+263	857.071	860.818	fe016	maybe oth- you know, if - if you have any idea of how to choose, cuz I don't.
+264	861.372	863.080	mn017	Do they already have
+265	866.458	871.635	me011	You don't need a full X_M_L parser. It's very easy to just write a Perl script
+266	871.657	876.138	mn017	As long as
+267	874.040	877.220	me011	Exactly. Exactly. Which I always do.
+268	876.365	879.957	fe016	And you can have as much information in the tag as you want, right?
+269	886.490	889.412	fe016	Can you - But you can add to those structures
+270	889.192	889.845	me011	Sure.
+271	889.788	890.875	fe016	if you -
+272	890.980	892.203	me011	If you have more information.
+273	891.872	893.380	fe016	Yeah. So -
+274	892.203	896.056	me011	What
+275	898.004	905.220	me011	"start equals, um, you know, some node I_D, end equals some other node I_D"","
+276	905.685	909.480	me011	"and then ""type"" would be ""utterance""."
+277	910.401	910.745	mn017	Hmm.
+278	911.061	912.740	me011	You know, so it's very similar.
+279	913.369	918.915	fe016	So why would it be a - a
+280	918.212	922.270	me018	It probably wouldn't be a
+281	922.127	923.496	me011	Write a translator. But it se-
+282	922.940	924.000	me018	translate everything.
+283	923.820	925.264	fe016	But it - but that sounds -
+284	923.910	925.793	me011	Since they are developing a big -
+285	924.935	926.655	me018	But that's - I don't think that's a big deal.
+286	925.778	927.162	fe016	As long as it is -
+287	926.993	930.316	me011	they're developing a big infrastructure. And so it seems to me that if -
+288	930.614	931.571	mn017	If we want to -
+289	933.927	938.066	mn017	Do they already
+290	936.500	939.627	me018	Yeah. See, that's the question. I mean, how stable is their -
+291	940.201	941.605	me018	Are they ready to go, or - ?
+292	940.841	945.347	me011	The - I looked at it - The last time I looked at it was a
+293	945.422	945.765	me018	Hmm.
+294	945.679	949.091	me011	uh, when we first started talking about this. And at
+295	949.586	951.976	me011	it was still not very
+296	951.976	956.855	me011	And so, specifically they didn't have any external format representation at that time.
+297	957.069	960.614	me011	They just had the sort of conceptual
+298	960.614	965.447	me011	uh, annotated transcription graph, which I really
+299	969.099	972.136	me011	which is, uh, you know, this sort of s-
+300	972.561	976.578	me011	Um, and apparently they've also developed a lot of
+301	976.822	981.548	fe016	I mean, would the tools - would the tools run on something like
+302	982.577	984.630	fe016	I mean, that - I guess it's a question that -
+303	982.673	983.884	mn017	It's a hassle
+304	984.690	985.239	mn017	if -
+305	988.192	991.123	me011	that would make it very difficult to translate from one to the other.
+306	988.553	989.164	fe016	O_K.
+307	990.073	998.857	mn017	I - I think if it's conceptually
+308	990.860	991.405	fe016	O_K.
+309	998.846	999.953	me011	Yeah, we might as well.
+310	999.229	1003.664	mn017	it would be crazy to do something s- you know, separate that -
+311	1003.276	1003.692	me011	Yep.
+312	1004.031	1004.486	fe016	Yeah.
+313	1005.830	1012.041	fe016	Actually, so it's - that - that would really be the question, is just what you would feel is in the long run the best thing. Cuz
+314	1008.201	1008.755	me011	And -
+315	1009.764	1010.398	me011	Right.
+316	1011.782	1012.276	me011	The -
+317	1012.041	1019.481	fe016	once we start, sort of, doing this I don't - we don't actually have enough time to probably have to rehash it out again and -
+318	1014.910	1015.330	me011	Yep.
+319	1019.382	1026.553	me011	The other thing - the other way that I sort of established
+320	1020.189	1021.197	fe016	s-
+321	1026.593	1028.400	fe016	Right. Right.
+322	1027.470	1029.193	me011	Um, but -
+323	1029.174	1035.367	fe016	I mean, I
+324	1032.004	1032.382	me011	Yep.
+325	1035.829	1040.274	fe016	I suppose that
+326	1040.591	1041.145	fe016	um,
+327	1041.165	1047.761	me011	It's
+328	1042.081	1043.637	fe016	it's - yeah, close enough that -
+329	1048.492	1050.641	me011	Right? So if you suddenly decide that you want -
+330	1050.358	1052.109	fe016	You have to make a different type.
+331	1051.670	1053.846	me011	Yeah. You'd have to make a different type.
+332	1053.463	1055.250	fe016	So - Well, if you look at it and -
+333	1055.720	1059.443	fe016	Um, I guess in my mind I don't know enough - Jane would know better,
+334	1060.200	1063.228	fe016	the
+335	1063.228	1068.150	fe016	But I imagine that those are things that would - well,
+336	1068.748	1076.504	fe016	it could be in its own channel, it could span time boundaries of any type, it could be instantaneous, things like that. Um,
+337	1072.464	1073.137	me011	Right.
+338	1076.847	1079.005	fe016	and then from the
+339	1079.973	1084.800	fe016	backtraces at the phone-level. If - if it can handle
+340	1081.629	1082.434	me011	Right.
+341	1084.800	1087.253	fe016	And then at the
+342	1087.827	1089.844	fe016	frame - sort of like cepstral
+343	1089.085	1089.711	me011	Yep.
+344	1090.330	1095.397	fe016	feature files, uh, like these P_files or anything like that. And that's sort of the world of things that I -
+345	1095.788	1098.990	fe016	And then we have the aligned channels, of course, and -
+346	1097.523	1098.067	me011	Right.
+347	1098.503	1101.666	mn017	It seems to me you want to keep the frame-level stuff separate.
+348	1101.753	1109.533	fe016	Yeah. I - I definitely agree and I wanted to find actually a f- a nicer format or a - maybe a more compact format than what we used before. Just cuz you've got
+349	1102.178	1103.015	mn017	And then -
+350	1107.614	1108.189	me011	Right.
+351	1109.922	1115.071	fe016	ten channels or whatever and two hours of a meeting. It's - it's a lot of -
+352	1113.903	1114.441	me011	Huge.
+353	1115.603	1123.283	mn017	how would you represent, um, multiple speakers in this framework? Were - You would just represent them as -
+354	1121.451	1122.280	me011	Um,
+355	1123.283	1125.790	mn017	You would have like a speaker tag or something?
+356	1128.679	1135.740	me011	the way I had it is each turn or each utterance,
+357	1129.685	1130.215	mn017	Mm-hmm.
+358	1136.140	1136.782	mn017	O_K.
+359	1140.120	1143.049	me011	which - which would, uh, be linked to the link.
+360	1143.823	1144.337	fe016	Yeah.
+361	1143.959	1148.530	me011	So - so somewhere else you would have another thing
+362	1150.243	1152.656	me011	Let's see, would it be a node or a link? Um -
+363	1153.519	1158.202	me011	And so - so this one would have, um, an I_D is link -
+364	1158.881	1164.855	me011	link seventy-four or something like that. And then somewhere up here you would have a link that - that, uh,
+365	1160.933	1161.522	mn017	Mm-hmm.
+366	1166.048	1172.847	me011	you know, was referencing L_seventy-four and had speaker Adam.
+367	1173.408	1175.578	fe016	Actually, it's the
+368	1173.578	1175.280	me011	You know, or something like that.
+369	1176.131	1179.658	fe016	I mean, w- yeah, channel is what the channelized output out-
+370	1176.133	1178.590	mn017	Well, channel or speaker or whatever. It doesn't -
+371	1180.154	1184.294	mn017	Right.
+372	1180.212	1181.241	fe016	Yeah, but -
+373	1184.294	1190.445	mn017	a hierarchical relationship between, um, say, an utterance and the words within it?
+374	1190.445	1196.540	mn017	So how do you
+375	1196.821	1203.990	me011	Um, you would have another structure lower down than this that would be saying they're all belonging to this I_D.
+376	1200.250	1200.949	mn017	Mm-hmm.
+377	1205.462	1209.682	me018	So each thing refers to the
+378	1209.371	1209.958	me011	Right.
+379	1210.878	1216.160	me011	And then each utterance could refer to a turn, and each turn could refer to something higher up.
+380	1210.970	1213.299	me018	So it's - it's not hi- it's sort of bottom-up.
+381	1217.935	1223.672	fe016	So right now what
+382	1223.973	1228.664	fe016	stuff between the segment boundaries that the transcribers put in or that Thilo put in,
+383	1229.173	1236.008	fe016	which may or may not actually be, like, a s- it's usually
+384	1235.910	1238.932	me011	"Well, that's why I didn't call it ""sentence""."
+385	1236.604	1240.553	fe016	So, right.
+386	1239.327	1239.762	me011	Yeah.
+387	1241.261	1247.103	fe016	I mean, I assume this is possible, that if you have - someone annotates the punctuation or whatever when they transcribe,
+388	1247.513	1248.997	fe016	you can say, you know, from -
+389	1249.551	1256.110	fe016	for - from the c- beginning of the sentence to the end of the sentence, from the annotations, this is a unit, even though it
+390	1256.827	1260.862	fe016	i- It's only a unit by virtue of the annotations
+391	1260.898	1263.473	me011	Sure. I mean, so you would - you would have yet another tag.
+392	1261.460	1264.801	fe016	And then that would get a tag somehow. O_K.
+393	1264.128	1266.817	me011	"You'd have another tag which says this is of type ""sentence""."
+394	1266.561	1267.273	fe016	O_K.
+395	1267.300	1268.953	me011	And, what -
+396	1267.955	1270.467	fe016	But it's just not overtly in the -
+397	1271.931	1273.770	fe016	Um, cuz this is exactly the kind of -
+398	1273.058	1273.925	mn017	So -
+399	1274.977	1277.696	fe016	I think that should be
+400	1278.056	1283.680	fe016	But, uh, what I don't understand is where the - where in this type of file
+401	1284.720	1286.707	me011	Right. You would have another
+402	1287.221	1292.320	fe016	S- so it would just be floating before the sentence or floating after the sentence without a time-mark.
+403	1290.642	1292.928	me011	You could have some sort of link type -
+404	1293.956	1295.361	me011	"type equals ""sentence"","
+405	1300.121	1305.345	me011	"And then lower down you could have an utterance. So the type is ""utterance"" -"
+406	1306.471	1308.770	me011	"equals ""utt"". And you could either say that -"
+407	1309.502	1311.460	me011	No. I don't know - I take that back.
+408	1312.901	1313.860	fe016	See, cuz it's -
+409	1313.183	1316.130	me011	Can you - can you say that this is
+410	1315.172	1316.094	mn017	Hhh.
+411	1316.733	1317.714	me018	You would just have a r-
+412	1317.179	1319.789	me011	part of this, or do you say this is part of this? I think -
+413	1317.372	1318.055	fe016	S-
+414	1319.804	1320.433	fe016	But they're -
+415	1319.881	1321.590	me018	You would refer up to the sentence.
+416	1320.722	1321.640	mn017	Well, the thing -
+417	1321.087	1323.660	fe016	they're actually overlapping each other, sort of.
+418	1321.728	1322.242	me011	So -
+419	1323.042	1326.181	mn017	the thing is that some- something may be a part of
+420	1323.310	1325.013	me011	Right.
+421	1326.687	1329.627	mn017	one thing for one purpose and another thing of another purpose.
+422	1330.019	1332.195	fe016	You have to have another type then, I guess.
+423	1330.205	1330.713	mn017	So f-
+424	1331.428	1331.934	mn017	s-
+425	1332.388	1335.580	mn017	Um, well,
+426	1333.805	1334.450	fe016	Yeah.
+427	1336.171	1337.476	fe016	O_K. O_K.
+428	1336.392	1337.150	mn017	so -
+429	1337.743	1340.167	mn017	y- So for instance
+430	1340.975	1349.690	mn017	Suppose you have a word sequence and you have two different segmentations of that same word sequence. f- Say, one segmentation is in terms of,
+431	1350.926	1351.710	mn017	um,
+432	1352.482	1359.539	mn017	you know, uh,
+433	1360.113	1365.440	mn017	And let's say that they don't
+434	1365.096	1365.650	me011	Right.
+435	1366.470	1369.932	mn017	two sentences or something. I don't know if that's true or not but
+436	1368.801	1374.754	fe016	Well, it's definitely true with the segment. That's what I - exactly what I meant by the utterances versus the sentence could be sort of -
+437	1370.575	1370.914	mn017	Right.
+438	1371.237	1371.900	mn017	Yeah.
+439	1373.221	1380.310	mn017	So, you want to be s- you want to say this - this
+440	1375.209	1375.819	fe016	Yeah.
+441	1380.944	1381.299	fe016	Yeah.
+442	1381.028	1384.850	mn017	But the phrase is not part of the sentence and neither is the sentence part of the phrase.
+443	1383.576	1384.189	fe016	Right.
+444	1384.107	1388.480	me011	I- I'm pretty sure that you can do that, but I'm forgetting the exact level of nesting.
+445	1386.282	1392.870	mn017	So, you would have to have
+446	1396.412	1400.409	me011	"And then lower down you would say ""here's a prosodic boundary and it has these words in it""."
+447	1400.920	1404.120	me011	"And lower down you'd have ""here's a"
+448	1401.399	1402.494	fe016	An- Right.
+449	1401.761	1402.483	mn017	Right.
+450	1403.016	1408.698	fe016	So
+451	1407.821	1408.403	me011	Yep.
+452	1409.324	1411.810	me011	So I think that's - that would wor- Let me look at it again.
+453	1409.432	1410.578	fe016	Um, O_K.
+454	1411.137	1411.928	mn017	Mm-hmm.
+455	1411.507	1412.279	fe016	O_K.
+456	1411.928	1418.497	mn017	The - the o- the
+457	1412.150	1412.699	me011	So.
+458	1413.278	1414.170	fe016	That's good.
+459	1419.557	1424.060	mn017	find and extract information in a structure of this type?
+460	1424.508	1427.150	mn017	So you gave some examples like -
+461	1430.833	1438.346	fe016	I don't know if this is premature because I suppose once you get the representation you can
+462	1439.126	1443.128	mn017	No, that's not clear. I mean, yeah, you c- sure you can do it, but can you do it
+463	1439.150	1439.782	fe016	uh -
+464	1440.217	1442.240	fe016	Well, O_K. So i- if it -
+465	1443.310	1446.793	fe016	I- I mean,
+466	1443.833	1445.838	mn017	sort of l- l- you know,
+467	1446.067	1446.269	mn017	it -
+468	1446.721	1450.877	mn017	y- y- you gotta - you gotta do this - you - you're gonna want to do this very quickly
+469	1447.074	1447.588	me011	Well -
+470	1450.877	1456.275	mn017	or else you'll spend all your time sort of searching through very
+471	1453.953	1458.592	fe016	Right. You'd need a p- sort of a paradigm for how to do it. But an example would be
+472	1460.267	1463.568	fe016	"""find all the cases in which Adam"
+473	1465.110	1472.280	fe016	started to talk while Andreas was talking and his pitch was rising,
+474	1474.224	1478.932	me011	Is the rising pitch a
+475	1478.585	1486.820	fe016	Well, the rising pitch will never be
+476	1485.428	1492.449	me011	I mean, that's gonna be hard regardless, right? Because you're gonna have to write a program that goes through your feature file and looks for rising pitches.
+477	1494.462	1499.151	fe016	"""what do we wanna assign rising pitch to?"" Are we gonna assign it to"
+478	1499.466	1504.763	fe016	when it's rising we have a begin-end
+479	1504.763	1509.589	fe016	uh, for every word we just classify it as, w- you know, rise or fall or neither?
+480	1509.552	1513.270	me011	O_K. Well, in that case you would add that to this
+481	1510.024	1510.507	fe016	O_K.
+482	1512.736	1514.713	fe016	So we would basically be sort of, um,
+483	1515.563	1518.939	fe016	taking the format and enriching it with things that we wanna
+484	1519.330	1524.375	fe016	query in relation to the words that are already in the file, and then querying it. O_K.
+485	1521.954	1522.508	me011	Right.
+486	1527.832	1529.505	mn017	on the structural representation.
+487	1528.780	1538.940	me011	There's a
+488	1542.885	1548.340	mn017	That's relative to the structure of the X_M_L document, not to the structure of what you're
+489	1545.289	1546.930	me011	You use it as a tool.
+490	1546.930	1554.110	me011	You use it as a tool, not an end-user. It's not an end-user thing. It's - it's - you would use that to build your tool to do that sort of search.
+491	1549.741	1550.379	mn017	Right.
+492	1552.427	1552.771	mn017	Right.
+493	1554.182	1558.041	mn017	Because
+494	1558.041	1562.495	mn017	that's the underlying data structure. And you want to be able to search in that lattice.
+495	1559.580	1561.222	fe016	But as long as the -
+496	1561.580	1562.927	me011	It's a graph, but -
+497	1563.204	1565.800	mn017	That's
+498	1566.090	1570.542	me011	Well, no, no, no. The whole
+499	1570.970	1573.726	me011	They
+500	1573.889	1574.661	mn017	Um -
+501	1575.073	1575.868	me011	So that -
+502	1577.410	1585.918	fe016	That's true if the features from your acoustics or whatever that are not explicitly
+503	1577.525	1578.177	me011	I mean th-
+504	1578.551	1579.750	mn017	Hhh.
+505	1586.235	1587.402	fe016	That - that if you can
+506	1587.300	1589.405	me011	Yeah, but that's gonna be the trouble no matter what.
+507	1588.288	1589.004	fe016	do that -
+508	1589.741	1594.028	me011	Right? No matter what format you choose, you're gonna have the trou- you're gonna have the difficulty of relating
+509	1594.020	1600.606	fe016	That's right. That's true. That's why I was trying to figure out what's the best format for this representation. And it's
+510	1594.375	1597.132	me011	the - the frame-level features -
+511	1599.167	1599.662	me011	Yep.
+512	1601.931	1604.726	fe016	it's still gonna be, uh, not direct. You know, it -
+513	1602.289	1602.899	mn017	Hmm.
+514	1604.089	1604.663	me011	Right.
+515	1605.576	1611.582	fe016	Or another example was, you know, uh, where in the language - where in the word sequence
+516	1612.291	1614.790	fe016	are people interrupting? So,
+517	1615.799	1617.282	fe016	I guess that one's actually easier.
+518	1621.784	1632.352	me018	the idea of using a relational database to, uh, store the information from the X_M_L? So you would have - X_M_L basically would -
+519	1633.576	1637.246	me018	Uh, you - you could use the X_M_L to put the data
+520	1637.246	1640.916	me018	and then when you get data out, you put it back in X_M_L. So use X_M_L as sort of the -
+521	1640.235	1641.048	me011	Transfer.
+522	1640.916	1644.707	me018	the transfer format, uh, but then you store the data in the database, which
+523	1645.369	1646.360	me011	The, uh -
+524	1645.414	1648.769	me018	allows you to do all kinds of
+525	1648.269	1654.070	me011	One of the things that ATLAS is doing is they're trying to define an A_P_I which is independent of the back store,
+526	1649.452	1649.940	fe016	Huh.
+527	1654.945	1661.463	me011	so that, uh, you could define a single A_P_I and the - the storage could be flat X_M_L files or a database.
+528	1658.967	1660.587	me018	Mm-hmm.
+529	1668.579	1670.350	mn017	But -
+530	1670.160	1674.961	me011	just a flat file and, uh, search tools I
+531	1675.776	1678.388	me011	But that's the advantage of ATLAS, is that if we actually take -
+532	1679.026	1686.010	me011	decide to go that route completely and we program to their A_P_I, then if we wanted to add a database later it would be pretty easy.
+533	1680.447	1681.086	me018	Mm-hmm.
+534	1682.790	1683.357	me018	Mm-hmm.
+535	1688.042	1696.134	fe016	It seems like the kind of thing you'd do if - I don't know, if people start adding all kinds of s- bells and whistles to the data. And so that might be -
+536	1696.134	1699.134	fe016	I mean, it'd be good for us to know - to use a format where
+537	1700.052	1705.235	fe016	we know we can easily, um, input that to some database if other people are using it.
+538	1703.931	1704.504	me011	Yep.
+539	1705.551	1706.590	fe016	Something like that.
+540	1707.317	1708.086	fe016	So -
+541	1712.626	1718.315	me011	the whole framework that - that NIST is talking about, with ATLAS
+542	1718.599	1719.055	me018	Hmm.
+543	1719.165	1722.033	me011	just to get going. Whereas if we
+544	1719.248	1719.913	mn017	Hmm.
+545	1722.986	1727.741	me011	sure, it may not be as efficient but
+546	1729.125	1731.140	me011	Right? So, as opposed to -
+547	1729.425	1732.901	mn017	But this is - I - I'm still, um,
+548	1732.901	1741.210	mn017	not convinced that you can do much at
+549	1741.210	1742.032	mn017	e-
+550	1742.032	1744.361	mn017	Because the text representation is gonna be,
+551	1745.337	1751.014	mn017	uh, not reflecting the structure of - of your words and annotations.
+552	1751.508	1752.758	mn017	It's just - it's -
+553	1751.733	1758.495	me011	Well, if it's not
+554	1754.831	1758.374	mn017	No. You - you have to - what you have to do is you have to basically -
+555	1758.659	1765.265	mn017	Y- yeah. You can use Perl to read it in and construct a internal representation that is essentially a lattice.
+556	1766.531	1767.047	mn017	But,
+557	1767.355	1769.154	mn017	the - and then -
+558	1768.279	1771.038	me011	O_K. Well,
+559	1770.045	1770.994	mn017	Right.
+560	1771.335	1772.820	me011	is that -
+561	1772.358	1773.823	mn017	But
+562	1773.986	1785.666	me011	For Perl - if you want to just do Perl. If you wanted to use the structured X_M_L query language, that's a different thing. And it's a set of tools
+563	1774.273	1774.767	mn017	Bec- be-
+564	1786.278	1789.550	me011	um, what sorts of structural searches you want to do.
+565	1790.340	1792.643	me011	So you want to say that, you know, you're looking for,
+566	1793.359	1798.321	me011	um, a tag within a tag within a particular tag that has this particular text in it,
+567	1798.759	1801.914	me011	um, and, uh, refers to a particular value.
+568	1811.427	1814.632	me011	someone would build a
+569	1816.320	1820.603	me011	So that they - so that you wouldn't have to construct the internal representations yourself.
+570	1819.034	1819.492	fe016	Is a -
+571	1822.330	1827.674	fe016	See, I think the kinds of questions, at least in the next - to the end of this year, are -
+572	1828.261	1831.748	fe016	there may be a lot of different ones, but they'll all have a similar nature. They'll be
+573	1832.317	1835.829	fe016	looking at either a word-level prosodic,
+574	1836.856	1841.837	fe016	uh, an - a
+575	1839.020	1839.491	me011	Mm-hmm.
+576	1842.333	1844.259	fe016	you know, we'll do
+577	1844.754	1850.239	fe016	some kind of data reduction where the prosodic features are sort o- uh, either at the word-level or at the
+578	1850.577	1856.420	fe016	segment-level, or - or
+579	1851.433	1851.921	me011	Right.
+580	1856.923	1859.487	fe016	sort of giving them simpler shapes and things.
+581	1860.219	1862.958	fe016	And so the main thing is just being able -
+582	1864.930	1867.761	fe016	Well, I guess, the
+583	1867.761	1874.025	fe016	starting out with something that we don't have to start over, that we don't have to throw away if other people want to extend it for other kinds of questions,
+584	1872.479	1873.033	me011	Right.
+585	1879.770	1886.855	fe016	where we condition the location of features on information that's in the kind of file that you
+586	1887.168	1889.900	fe016	And that would - that would do it, I mean, for
+587	1888.733	1895.370	me011	Yeah. I think that there are quick and dirty solutions, and then there are long-term, big-infrastructure solutions. And so
+588	1895.370	1898.416	me011	we want to try to pick something that lets us do a little bit of both.
+589	1897.428	1903.810	fe016	In the between, right. And especially that the representation doesn't have to be thrown away, even if your tools change.
+590	1898.950	1899.910	me011	Um -
+591	1901.260	1902.000	me011	Right.
+592	1907.944	1912.060	me011	but if we use the ATLAS external file representation,
+593	1912.800	1913.475	me011	um,
+594	1914.068	1918.975	me011	it
+595	1918.953	1919.705	fe016	Yeah.
+596	1918.975	1925.305	me011	and then later on if we choose to go up the learning curve, we can use the whole ATLAS inter- infrastructure,
+597	1925.342	1927.501	fe016	I mean, that sounds good to me. I - I don't -
+598	1926.158	1927.659	me011	which has all that built in.
+599	1927.963	1931.526	fe016	So if - if you would l- look at that and let us know what you think.
+600	1930.383	1930.819	me011	Sure.
+601	1931.526	1937.223	fe016	I think we're sort of guinea pigs, cuz I - I want to get the prosody work
+602	1936.504	1937.222	mn017	Oh, maybe -
+603	1937.940	1939.301	fe016	getting the - Yeah?
+604	1939.269	1939.774	mn017	um -
+605	1939.847	1943.565	me011	Well, I wouldn't wait for the formats, because anything you pick we'll be able to translate
+606	1941.364	1942.577	mn017	Well -
+607	1944.297	1945.365	me011	to another form.
+608	1945.934	1946.593	fe016	O_K.
+609	1951.113	1953.784	mn017	what it is you'll - you'll be dealing with, because,
+610	1954.153	1954.812	mn017	um,
+611	1955.821	1959.114	mn017	you know, Adam might have
+612	1958.169	1959.100	me001	Yeah.
+613	1958.747	1959.578	fe016	Yeah, definitely.
+614	1960.593	1962.639	mn017	I think the more eyes look at this the better.
+615	1962.663	1967.470	fe016	Especially if there's,
+616	1968.340	1970.324	fe016	the setup of the right -
+617	1970.324	1972.039	fe016	Oh, hi.
+618	1970.388	1971.120	me011	Hi, Jane.
+619	1971.558	1972.051	mn017	Mmm.
+620	1974.509	1982.736	fe016	the right representation, then, i- you know, I hope it won't - We don't actually need the whole full-blown thing to be
+621	1980.377	1981.805	me011	Can you - Oh, well.
+622	1984.128	1989.166	fe016	Um, so maybe if you guys can look at it and sort of see what,
+623	1987.125	1987.627	me011	Sure.
+624	1987.524	1988.374	me001	Yeah.
+625	1989.481	1990.144	fe016	um -
+626	1990.968	1995.377	fe016	I think we're - we're -
+627	1992.133	1993.710	me011	We're about done.
+628	1994.849	1995.699	fe008	Oh you are? Oh.
+629	1995.377	1998.423	fe016	Yeah, sorry, it's a
+630	1998.890	2000.581	fe016	Well, I don't know. Is there anything else, like -
+631	2010.372	2015.854	me011	and so if we pick something else, there's the learning-curve problem. But, I mean, it is just something we developed at ICSI.
+632	2016.210	2016.942	me011	And so -
+633	2016.232	2018.297	mn017	Is there an - is there an I_P- A_P_I?
+634	2019.059	2021.512	me011	Yeah. There's an A_P_I for it. And, uh,
+635	2019.625	2020.159	mn017	O_K.
+636	2022.086	2024.221	me011	a bunch of libraries, P_file utilities.
+637	2024.908	2028.700	mn017	and so
+638	2029.100	2029.752	mn017	wouldn't -
+639	2032.916	2035.286	me011	And we definitely hit that with Broadcast News.
+640	2041.615	2047.154	mn017	you know, conceptually one file into smaller files on disk so that you can essentially,
+641	2047.436	2047.812	me011	Yep.
+642	2047.787	2049.900	mn017	you know, have arbitrarily long f-
+643	2048.188	2050.724	me011	Most of the tools can handle that. So that
+644	2050.150	2050.605	mn017	Yeah.
+645	2051.160	2059.128	me011	we didn't do it at the A_P_I-level. We did it at the t- tool-level. That - that - most - many of them can s- you can specify several P_files and they'll just be done sequentially.
+646	2059.466	2060.320	mn017	O_K.
+647	2060.211	2060.750	me011	So.
+648	2062.040	2068.610	fe016	So, I guess, yeah, if - if you and Don can - if you can show him the P_file stuff and see. So this would be like for the F_zero -
+649	2065.899	2066.386	me011	Sure.
+650	2074.120	2075.812	mn017	What does the P_ stand for anyway?
+651	2074.629	2076.180	me001	s- something.
+652	2075.525	2079.417	me011	I have no idea.
+653	2083.931	2087.432	me011	So it's all part of the Quicknet library. It has all the utilities for it.
+654	2088.293	2090.904	mn017	No,
+655	2090.749	2091.422	me011	Oh, were they?
+656	2090.904	2094.840	mn017	P_files were - were around when - w- with, um,
+657	2094.805	2095.531	me018	Mm-hmm.
+658	2094.867	2098.111	fe016	It's like the history of ICSI. Like -
+659	2095.372	2096.007	mn017	Right?
+660	2097.413	2098.264	me018	No.
+661	2097.444	2098.037	me011	Mm-hmm.
+662	2098.507	2099.270	fe016	Yeah?
+663	2100.973	2102.615	me018	"I don't remember what the """
+664	2102.161	2103.670	fe008	Is it related to P_make?
+665	2103.544	2104.263	mn017	No.
+666	2105.010	2106.278	me011	But there are ni- they're -
+667	2106.950	2111.245	me011	The
+668	2109.509	2109.964	mn017	Yeah.
+669	2112.139	2117.383	fe016	And that isn't really, I guess, as important as the - the main - I don't know what you call it, the -
+670	2117.383	2119.070	fe016	the main sort of word-level -
+671	2117.548	2118.304	me011	Neither do I.
+672	2120.916	2121.743	me018	Phil Kohn.
+673	2122.938	2124.540	me011	It's a Phil file?
+674	2124.005	2124.417	me018	Yeah.
+675	2125.836	2127.603	me018	That's
+676	2128.608	2135.220	fe016	O_K. Well, that's really useful. I mean, this is exactly the kind of thing that I wanted to settle. Um, so -
+677	2136.119	2140.270	me011	Yeah, I've been meaning to look at the ATLAS stuff again anyway. So, just keep -
+678	2136.535	2137.710	fe016	Great.
+679	2139.118	2139.651	fe016	Yeah.
+680	2140.166	2145.244	fe016	I guess it's also sort of a political deci- I mean, if - if you feel like that's a community that would
+681	2146.374	2148.631	fe016	be good to tie into
+682	2149.521	2150.965	fe016	sounds like it's worth doing.
+683	2149.858	2150.768	me011	Yeah, I think it - it w-
+684	2150.992	2157.598	me011	And, w- uh, as I said, I - what I did with
+685	2158.092	2159.952	me011	So now that they
+686	2160.921	2163.104	me011	it doesn't - it seems pretty reasonable to use it.
+687	2163.757	2165.142	me011	But let me look at it again.
+688	2164.865	2165.869	fe016	O_K, great.
+689	2165.557	2166.920	me011	As I said, that -
+690	2166.227	2167.752	fe016	Cuz we actually can start -
+691	2166.920	2171.671	me011	There's one level - there's one more level of indirection and I'm just blanking on exactly how it works.
+692	2174.824	2183.243	fe016	I mean, we can
+693	2183.737	2188.583	fe016	channels, you know, with the channels in the tag and stuff like that. So that would be
+694	2185.214	2186.143	me011	Yeah, I've seen it.
+695	2188.990	2189.253	me011	Yep.
+696	2189.290	2189.869	fe016	um -
+697	2189.664	2191.120	me011	Easy - easy to map.
+698	2190.300	2192.478	fe016	Yeah. And so then it would just be a matter of getting -
+699	2192.795	2198.353	fe016	making sure to handle the annotations that are, you know, not at the word-level and, um,
+700	2198.759	2200.477	me001	Where are those annotations coming from?
+701	2198.996	2200.036	fe016	t- to import the-
+702	2200.727	2203.892	fe016	Well, right now, I g- Jane would -
+703	2202.382	2202.910	me011	Mm-hmm.
+704	2207.611	2209.482	fe008	Are you talking about the overlap a- annotations?
+705	2209.190	2214.871	fe016	Yeah, any kind of annotation
+706	2214.950	2220.041	fe008	So what
+707	2220.379	2223.948	fe008	And so put, uh, a - a green ribbon on for an overlap code.
+708	2231.255	2233.215	fe008	And so it's nice to have -
+709	2233.597	2241.247	fe008	However, you know, you want to have it, uh, time- time- uh,
+710	2241.622	2246.635	fe008	if we - if we tie the overlap code to the first word in the overlap,
+711	2246.976	2250.819	fe008	then you'll have a time-marking. It won't - it'll be independent of the time bins,
+712	2250.819	2257.124	fe008	however these e- evolve, shrink, or whatever, increase, or - Also, you could have different time bins for different purposes.
+713	2265.015	2266.981	fe008	And it would just end up on a separate ribbon.
+714	2267.280	2269.741	fe008	So the
+715	2267.471	2268.019	me011	Right.
+716	2271.862	2272.922	fe008	You look puzzled.
+717	2278.113	2281.164	me018	Well, th- overlap codes. I'm not sure what that
+718	2280.143	2281.150	me011	Well, I mean, is that -
+719	2281.599	2285.350	fe008	Well, we don't have to go into the codes. We don't have to go into the codes. But let me just -
+720	2282.113	2284.000	me018	It probably doesn't matter. No, I d-
+721	2283.292	2286.187	me011	I mean, it doesn't. I mean, that - not for the topic of
+722	2286.033	2288.406	fe008	No. W- the idea is just to have a separate green ribbon,
+723	2288.715	2295.083	fe008	you know, and - and - and let's say that this is a time bin. There's a word here. This is the first word of an overlapping segment of
+724	2295.376	2300.612	fe008	overlapping with
+725	2301.440	2304.325	fe008	then you can indicate that this here was perhaps a ch- a backchannel,
+726	2304.325	2311.131	fe008	or you can say that it was, um, a usurping of the turn, or you can - you know, any - any number of categories. But the fact is, you have it
+727	2311.400	2315.941	fe008	in a way that's independent of the, uh, sp- particular time bin that the word ends up in.
+728	2316.094	2320.208	fe008	If it's a large unit or a small unit, or we sh- change the boundaries of the units,
+729	2316.861	2317.341	mn017	Mm-hmm.
+730	2320.050	2320.616	fe016	Right.
+731	2320.485	2323.551	fe008	it's still unique and - and, uh, fits with the format,
+732	2324.006	2325.430	fe008	flexible, all that.
+733	2325.683	2326.440	mn017	Um,
+734	2328.279	2329.710	mn017	it would be nice - um,
+735	2329.710	2331.925	mn017	eh, gr- this is sort of r- regarding -
+736	2339.613	2349.622	mn017	you often find yourself in the situation where you have
+737	2349.798	2350.485	fe008	Yeah.
+738	2350.245	2357.139	mn017	O_K? And sometimes the word sequences even differ slightly because they were edited s- at one place but not the other.
+739	2350.906	2351.435	fe008	Yeah.
+740	2357.139	2361.774	mn017	So, once this data gets out there, some people might start annotating this for,
+741	2363.421	2367.582	mn017	I don't know, dialogue acts or, um,
+742	2368.984	2374.879	mn017	you know, topics or what the heck. You know, there's a zillion things that people might annotate this for.
+743	2374.879	2376.930	mn017	And the only thing that
+744	2377.230	2383.525	mn017	is really sort of common among all the versi- the various versions of this data is the word sequence,
+745	2383.227	2383.820	fe008	Yep.
+746	2383.804	2385.397	mn017	or
+747	2384.675	2385.811	fe016	Or the time.
+748	2386.189	2392.696	mn017	Or the times. But, see, if you'd annotate dialogue acts, you don't necessarily want to - or topics - you don't really want to be dealing with
+749	2387.103	2387.657	fe016	I guess.
+750	2392.696	2396.375	mn017	You'd - it's much more efficient for them to just see the
+751	2394.641	2395.099	fe016	Mm-hmm.
+752	2397.087	2404.150	mn017	I mean, most people aren't as
+753	2405.800	2408.590	mn017	So the - the - the
+754	2407.481	2410.170	me011	Should - should we mention some names on the people who are n- ?
+755	2409.616	2410.467	mn017	Right.
+756	2410.843	2416.263	mn017	So, um, the p- my
+757	2417.009	2422.431	mn017	uh, word sequences that are differently annotated. And
+758	2423.230	2428.282	mn017	uh, that is able to sort of merge these different annotations back into a single,
+759	2428.816	2430.291	mn017	uh, version.
+760	2432.040	2438.544	mn017	Um, and we had this problem very massively, uh, at S_R_I when we worked, uh, a while back on,
+761	2439.016	2440.366	mn017	uh -
+762	2440.366	2445.347	mn017	well, on dialogue acts as well as, uh, you know, um, what
+763	2445.307	2447.400	fe016	Well, all the Switchboard in it. Yeah.
+764	2445.864	2451.028	mn017	utterance types. There's, uh, automatic, uh, punctuation and stuff like that.
+765	2451.028	2454.984	mn017	Because we had one set of
+766	2455.538	2462.981	mn017	uh, one version of the transcripts with a particular segmentation, and then we had
+767	2463.562	2468.511	mn017	uh, a different s- slightly
+768	2468.855	2470.790	mn017	we had these two different
+769	2471.272	2477.474	mn017	versions which were - you know, you could tell they were from the same source but they weren't identical. So it was extremely hard
+770	2477.989	2483.640	mn017	to reliably merge these two back together to correlate the information from the different annotations.
+771	2483.027	2488.210	me011	Yep. I - I don't see any way that
+772	2486.001	2486.569	mn017	No.
+773	2488.556	2489.048	fe016	Mm-hmm.
+774	2491.845	2496.986	mn017	not personally, but someone writing a tool that is essentially an alignment tool,
+775	2496.839	2497.425	me011	Yeah.
+776	2497.390	2501.269	mn017	um, that mediates between various versions, and -
+777	2501.269	2505.556	mn017	uh, sort of like th- uh, you know, you have this thing in UNIX where you have, uh,
+778	2505.369	2505.965	me011	Diff.
+779	2505.979	2506.267	mn017	diff.
+780	2506.683	2512.341	mn017	There's the, uh, diff that actually tries to reconcile different -
+781	2511.639	2512.817	fe008	Is it
+782	2512.341	2514.701	mn017	two diffs f-
+783	2514.108	2514.583	me011	Yep.
+784	2514.653	2515.563	fe008	Mmm.
+785	2515.332	2516.515	mn017	Something like that,
+786	2516.840	2523.630	mn017	um, but operating on these lattices that are really what's behind this - uh, this annotation format.
+787	2522.259	2522.708	me011	Yep.
+788	2523.630	2524.358	mn017	So -
+789	2523.677	2525.369	fe016	You could definitely do that with the -
+790	2523.796	2527.980	me011	There's actually a diff library you can use
+791	2528.654	2534.957	mn017	So somewhere in the A_P_I you would like to have like a merge or some - some function that merges two -
+792	2529.068	2530.514	me011	so you have different formats.
+793	2535.370	2538.127	me011	Yeah, I think it's gonna be very hard. Any sort of structured
+794	2535.639	2536.350	mn017	two versions.
+795	2538.642	2539.286	mn017	Right.
+796	2542.543	2547.737	me011	The hard part isn't the file format. The hard part is specifying what you
+797	2544.942	2545.739	mn017	Is -
+798	2546.677	2548.110	mn017	Exactly.
+799	2547.186	2552.744	fe016	But the one thing that would work here actually for i- that is more reliable than the utterances is the -
+800	2547.737	2549.473	me011	And that's very difficult.
+801	2553.773	2558.324	fe016	the speaker ons and offs. So if you have a good, um -
+802	2558.252	2561.778	me011	But this is exactly what I
+803	2559.098	2559.652	fe016	Yeah.
+804	2560.621	2562.836	fe016	You just have to know wha- what to tie it to.
+805	2562.397	2568.640	me011	"Yeah, exactly. The problem is saying ""what are the semantics, what do you"
+806	2563.302	2564.102	fe016	And -
+807	2566.164	2567.289	fe016	Right, right.
+808	2566.567	2567.147	mn017	Right.
+809	2567.775	2572.939	mn017	So - so just to let you know what we - where we
+810	2573.720	2575.259	mn017	uh, by doing - Hhh.
+811	2575.259	2582.817	mn017	Both were based on
+812	2581.980	2585.443	me011	And then you did diff.
+813	2585.030	2587.502	mn017	And that's how - Yeah.
+814	2585.443	2590.286	me011	That's just wh- how
+815	2587.502	2592.785	mn017	But, you know, it had lots of errors and things would end up in the wrong order, and so forth. Uh, so,
+816	2592.870	2593.373	me011	Yep.
+817	2593.150	2595.653	mn017	um, if you had a more -
+818	2595.653	2602.593	mn017	Uh, it - it was a kluge because it was basically reducing everything to - uh, to - uh, uh, to
+819	2600.421	2601.296	me011	A textual -
+820	2602.932	2604.287	mn017	Um, so -
+821	2603.831	2608.412	fe016	But, d- isn't that something where whoever - if
+822	2608.720	2613.892	fe016	who are making changes, say in the transcripts, cuz this all happened when the transcripts were different -
+823	2614.181	2619.510	fe016	ye- um, if they
+824	2619.888	2627.577	fe016	You know what I mean? Then - Or if they tied it to an acoustic segment and we had the
+825	2625.105	2625.495	me011	Yep.
+826	2628.516	2632.860	fe016	you know, y- you don't
+827	2638.902	2641.248	fe008	one version in terms of the words - where the words are concerned.
+828	2641.248	2645.045	fe008	We'd still have the - the merging issue maybe if coding were done independently of the -
+829	2645.449	2646.700	fe008	But - but -
+830	2651.272	2657.130	mn017	And, uh, s- you know, several years from now you might want to look into, um,
+831	2657.625	2659.330	mn017	the prosody of
+832	2660.967	2668.313	mn017	referring expressions. And someone at the university of who knows where has annotated the referring expressions.
+833	2668.313	2672.607	mn017	So you want to get that annotation and bring it back in line with your data.
+834	2668.335	2668.824	me011	Right.
+835	2672.602	2675.860	me011	But unfortunately they've also hand-edited it.
+836	2672.960	2673.812	mn017	O_K?
+837	2674.029	2681.060	fe016	But they've also - Exactly. And so that's exactly what we should - somehow when you distribute the data, say that - you know,
+838	2675.920	2676.670	mn017	Yeah.
+839	2676.637	2677.004	me011	Yep.
+840	2677.201	2677.841	mn017	Right.
+841	2678.187	2678.925	fe008	Well, then the -
+842	2681.350	2686.094	fe016	that - have some way of knowing how to merge it back in and asking people to try to do that.
+843	2684.991	2687.782	me018	What's - what's wrong with
+844	2687.132	2688.885	fe008	I agree. That was what I was wondering.
+845	2687.665	2693.974	fe016	Uh, yeah, time is the -
+846	2689.474	2693.718	fe008	Time is unique. You were saying that you didn't think we should - Andreas was saying - Yeah.
+847	2689.989	2690.543	me011	Well,
+848	2691.882	2694.654	mn017	Time - time - times are
+849	2694.840	2697.146	me011	what if they haven't notated with them, times?
+850	2695.010	2696.129	mn017	ephemeral.
+851	2696.071	2698.830	fe016	He - he's a language modeling person, though.
+852	2697.791	2698.468	mn017	Um -
+853	2697.962	2706.053	me011	So - so imagine - I think his - his example is a good one. Imagine that this person who developed the corpus of the referring expressions didn't include time.
+854	2704.556	2705.208	mn017	Mm-hmm.
+855	2706.170	2706.577	mn017	Yeah.
+856	2706.525	2707.240	fe008	Ach!
+857	2706.680	2712.740	me011	He included references to
+858	2708.064	2708.973	fe008	Well, then -
+859	2708.605	2709.118	mn017	Yeah.
+860	2710.879	2711.571	mn017	Or she.
+861	2711.255	2715.437	fe008	But then couldn't you just indirectly figure out the time
+862	2712.007	2713.273	fe016	But still they -
+863	2713.720	2714.974	fe016	Exactly. Yeah.
+864	2714.352	2716.843	me011	Sure. But what if - what if they change the
+865	2716.632	2720.910	fe008	Not - Well, but you'd have
+866	2720.412	2723.142	me018	But can they change the words without changing the
+867	2723.792	2732.742	me011	The - the
+868	2731.803	2732.746	mn017	Mmm. Mm-hmm.
+869	2732.742	2734.766	me011	And I - I guess the
+870	2735.221	2738.195	me011	um, it's gonna be
+871	2738.195	2739.890	me011	It's j- it's just gonna be -
+872	2738.260	2738.814	fe016	Yeah.
+873	2738.638	2739.331	fe008	Yeah.
+874	2739.760	2741.840	fe016	You only know the boundaries of the -
+875	2740.133	2744.376	me011	I- it's
+876	2744.376	2748.983	me011	So in this case where you have the words and you don't have the times, well, what do you
+877	2748.983	2752.110	me011	If you tell me what you
+878	2749.071	2749.392	fe016	Right.
+879	2755.336	2757.537	me011	Right. And that's about all you can do.
+880	2755.979	2760.530	fe016	And beyond that, all you know is - is relative ordering and sometimes even that is wrong.
+881	2761.036	2761.414	fe016	So.
+882	2765.370	2765.851	mn017	Mm-hmm.
+883	2765.563	2770.490	me011	extract the times f- from the best match of theirs to yours, and use that.
+884	2769.278	2772.937	fe016	And then infer that their time-marks are somewhere in between. Yeah, exactly.
+885	2771.160	2771.576	me011	Right.
+886	2777.549	2781.410	me011	Right, exactly. So it could get very, very ugly.
+887	2778.978	2780.503	fe016	Definitely. Definitely.
+888	2780.281	2780.567	fe008	Yeah.
+889	2781.452	2789.127	fe016	Alright. Well, I guess, w- I - I didn't want to keep people
+890	2781.726	2783.009	fe008	That's interesting.
+891	2789.344	2795.437	mn017	Ah, well.
+892	2789.621	2790.868	fe016	if not, I guess -
+893	2790.521	2792.903	me011	More digits, the better. O_K, this is
+894	2791.792	2798.206	fe016	Thanks - thanks a lot.
+895	2797.890	2800.270	me011	transcript two seven three one, two seven five O_.
+896	2801.110	2802.603	me011	eight five O_ five one
+897	2803.023	2804.678	me011	nine five zero six one
+898	2805.038	2806.008	me011	O_ seven eight
+899	2806.008	2806.631	me011	zero
+900	2806.631	2807.598	me011	one
+901	2807.598	2808.565	me011	two zero two
+902	2809.005	2811.212	me011	four four three four four two seven
+903	2811.515	2812.628	me011	five five six
+904	2812.628	2814.866	me011	six six O_ O_ nine eight five
+905	2815.200	2816.421	me011	seven six five
+906	2816.789	2817.840	me011	eight eight four
+907	2817.840	2818.420	me011	nine
+908	2818.619	2820.268	me011	O_ O_ one nine one
+909	2820.591	2822.094	me011	one five six one
+910	2822.403	2824.909	me011	two seven four eight five six zero
+911	2825.308	2826.220	me011	three four
+912	2826.220	2827.315	me011	four five O_
+913	2827.315	2828.116	me011	five
+914	2828.116	2828.755	me011	six
+915	2828.755	2829.730	me011	seven.
+916	2829.860	2833.356	me018	Transcript one five one one dash one five three zero.
+917	2834.072	2834.736	me018	zero
+918	2835.416	2837.713	me018	one O_ six six seven three nine
+919	2838.344	2840.409	me018	three one zero five eight eight one
+920	2841.282	2842.655	me018	four five three eight
+921	2843.287	2844.981	me018	five nine four three four
+922	2845.371	2847.635	me018	six six O_ one three four eight
+923	2848.216	2848.834	me018	seven
+924	2849.363	2851.573	me018	eight zero one one two four three
+925	2852.280	2853.675	me018	eight O_ seven two nine.
+926	2854.916	2855.757	me018	Scratch that.
+927	2855.757	2857.238	me018	nine O_ seven two nine
+928	2858.062	2859.127	me018	zero one
+929	2859.913	2861.378	me018	one three nine four
+930	2861.762	2862.880	me018	two two five
+931	2863.367	2864.721	me018	three eight seven O_
+932	2865.037	2865.784	me018	four
+933	2866.154	2866.794	me018	five
+934	2867.391	2868.518	me018	seven two two
+935	2869.017	2870.120	me018	eight one zero
+936	2870.526	2871.843	me018	nine five one
+937	2872.340	2873.371	me018	O_ nine eight
+938	2873.584	2874.450	me018	zero.
+939	2876.380	2879.237	fe008	Transcript one four five one, one four seven O_.
+940	2879.649	2881.298	fe008	nine five two O_
+941	2881.521	2883.213	fe008	O_ three O_ four seven
+942	2883.638	2884.057	fe008	s-
+943	2884.057	2886.512	fe008	zero seven one three six
+944	2887.285	2888.640	fe008	one nine O_ two
+945	2889.089	2889.911	fe008	two
+946	2889.911	2892.269	fe008	three O_ six O_ seven three two
+947	2890.703	2891.692	me011	Oh, right.
+948	2892.652	2894.514	fe008	four zero one zero four
+949	2895.115	2896.937	fe008	six two O_ one
+950	2897.344	2898.547	fe008	seven five one
+951	2899.007	2901.347	fe008	eight five one two four five five.
+952	2901.896	2903.490	fe008	nine five seven one
+953	2903.756	2905.263	fe008	O_ O_ four nine
+954	2905.573	2906.334	fe008	zero
+955	2906.914	2909.100	fe008	one zero eight one seven nine zero
+956	2909.807	2911.332	fe008	three three six one three
+957	2911.649	2913.323	fe008	four four five eight zero
+958	2913.772	2915.263	fe008	five two five one
+959	2915.427	2916.668	fe008	six six zero
+960	2916.862	2918.565	fe008	seven seven four three seven
+961	2918.691	2919.188	fe008	eight.
+962	2920.609	2924.453	fe016	Transcript number three three three one, three three five zero.
+963	2925.040	2927.372	fe016	one three seven seven eight one zero
+964	2927.917	2929.674	fe016	two five nine five five
+965	2929.991	2930.853	fe016	three eight
+966	2931.125	2932.586	fe016	four eight nine two
+967	2932.923	2933.565	fe016	five
+968	2933.975	2934.892	fe016	six
+969	2934.892	2936.588	fe016	seven zero five one
+970	2936.902	2937.699	fe016	nine one
+971	2938.099	2939.205	fe016	O_ three three
+972	2939.603	2941.175	fe016	zero eight five eight three
+973	2941.686	2943.060	fe016	one four O_ one
+974	2943.506	2944.055	fe016	two
+975	2944.466	2945.906	fe016	three O_ three six
+976	2946.163	2946.991	fe016	four zero
+977	2947.290	2948.546	fe016	six one three zero
+978	2948.846	2950.095	fe016	seven six five
+979	2950.528	2951.852	fe016	eight three seven
+980	2951.852	2953.179	fe016	nine nine three
+981	2953.450	2954.020	fe016	O_
+982	2954.318	2955.200	fe016	zero.
+983	2960.326	2962.682	mn017	two two five two five nine O_
+984	2963.180	2964.295	mn017	three four two
+985	2964.574	2965.071	mn017	four
+986	2965.399	2966.006	mn017	five
+987	2966.006	2966.752	mn017	six
+988	2966.752	2968.347	mn017	seven O_ eight
+989	2968.347	2969.983	mn017	nine four eight two six
+990	2969.983	2970.892	mn017	O_ three
+991	2970.892	2972.399	mn017	zero eight eight zero
+992	2972.399	2973.040	mn017	one
+993	2973.040	2973.661	mn017	two
+994	2973.661	2974.183	mn017	three
+995	2974.183	2975.028	mn017	four
+996	2975.028	2975.973	mn017	six one
+997	2975.973	2977.289	mn017	seven five seven
+998	2977.289	2979.706	mn017	eight four five three seven nine one
+999	2979.706	2981.081	mn017	nine five seven zero.
+1000	2981.377	2982.587	mn017	O_ O_ two five
+1001	2982.587	2983.209	mn017	zero
+1002	2983.209	2984.210	mn017	one O_.
+1003	2984.490	2988.071	me001	Transcript two nine seven one dash two nine nine zero.
+1004	2988.780	2990.181	me001	seven seven nine
+1005	2990.181	2991.075	me001	eight nine
+1006	2991.075	2992.348	me001	nine O_ two
+1007	2992.348	2992.984	me001	O_
+1008	2993.280	2994.818	me001	one one zero one
+1009	2995.291	2996.937	me001	two four five two
+1010	2996.937	2998.047	me001	three seven
+1011	2998.047	2999.175	me001	four four
+1012	2999.175	2999.938	me001	five
+1013	2999.938	3000.777	me001	six
+1014	3000.777	3001.885	me001	seven O_
+1015	3002.511	3004.387	me001	nine one four six zero
+1016	3004.387	3006.057	me001	O_ three nine four
+1017	3006.057	3006.881	me001	zero
+1018	3007.306	3009.574	me001	one eight one nine nine five eight
+1019	3010.241	3012.264	me001	two eight three seven five nine O_
+1020	3012.264	3013.077	me001	three
+1021	3013.077	3014.669	me001	four O_ seven three
+1022	3014.981	3016.774	me001	six two six two six
+1023	3016.774	3018.760	me001	seven three, zero one.
