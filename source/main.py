@@ -8,7 +8,6 @@ from transcript import read_full_transcript_phrase,read_full_transcript_word
 def get_phrases_df(meeting_name):
     path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\text\\transcripts\\"+meeting_name+".mrt"))))
     df_phrases = read_full_transcript_phrase(path)
-    # df_phrases.insert(loc=0,column='id_phrase', value=df_phrases.index)
     return df_phrases
 
 def get_words_df(meeting_name):
@@ -21,7 +20,9 @@ def get_words_df(meeting_name):
         participant = path[7]
         df_words.append(read_full_transcript_word(meeting_path,participant))
     
-    return pd.concat(df_words)
+    df_whole_words = pd.concat(df_words)
+    df_whole_words = df_whole_words.reset_index(drop=True)
+    return df_whole_words
 
 
 if __name__ == "__main__":
