@@ -98,3 +98,24 @@ def parse_segment_nodes_word(segment_nodes: List[Element],participant,feature):
         rows.append(row)
 
     return pd.DataFrame(rows)
+
+def read_full_transcript_segment(path: str,participant):
+    with open(path,"r") as file:
+        xml = objectify.parse(file)
+        segment_nodes = xml.xpath("//segment")
+        return parse_segment_nodes_segment(segment_nodes,participant)
+
+def parse_segment_nodes_segment(segment_nodes: List[Element],participant):
+    rows = []
+    for node in segment_nodes:
+        row = {
+            "id": node.attrib["{http://nite.sourceforge.net/}id"],
+            "StartTime": node.attrib["starttime"],
+            "EndTime": node.attrib["endtime"],
+            "Participant1": node.attrib["participant"],
+            "Participant2": participant,
+            "Timing Provenance": node.attrib["timing-provenance"],
+        }
+        rows.append(row)
+
+    return pd.DataFrame(rows)

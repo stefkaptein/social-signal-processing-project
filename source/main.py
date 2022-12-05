@@ -3,7 +3,7 @@ import config as cfg
 import os 
 import pandas as pd
 
-from transcript import read_full_transcript_phrase,read_full_transcript_word
+from transcript import read_full_transcript_phrase,read_full_transcript_word,read_full_transcript_segment
 
 def get_phrases_df(meeting_name):
     path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\text\\transcripts\\"+meeting_name+".mrt"))))
@@ -24,6 +24,20 @@ def get_words_df(meeting_name):
     df_whole_words = df_whole_words.reset_index(drop=True)
     return df_whole_words
 
+def get_segments_df(meeting_name):
+    main_path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\audio\ICSIplus\Segments\\"))))
+    all_files_names = [f for f in os.listdir(main_path) if os.path.isfile(os.path.join(main_path, f))]
+
+    df_segments = []
+    for path in (path for path in all_files_names if meeting_name in path):
+        meeting_path = (main_path+"\\"+path)
+        participant = path[7]
+        df_segments.append(read_full_transcript_segment(meeting_path,participant))
+    
+    df_whole_segments = pd.concat(df_segments)
+    df_whole_segments = df_whole_segments.reset_index(drop=True)
+    return df_whole_segments
+
 
 if __name__ == "__main__":
     meeting_name = "Bdb001"
@@ -32,4 +46,7 @@ if __name__ == "__main__":
     # df_phrases.to_csv(("out\\"+meeting_name+"_phrases"), sep='\t')
 
     df_words = get_words_df(meeting_name)
-    df_words.to_csv(("out\\"+meeting_name+"_words"), sep='\t')
+    # df_words.to_csv(("out\\"+meeting_name+"_words"), sep='\t')
+
+    df_segments = get_segments_df(meeting_name)
+    df_segments.to_csv(("out\\"+meeting_name+"_segments"), sep='\t')
