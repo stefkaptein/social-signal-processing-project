@@ -2,6 +2,8 @@ from typing import List
 import config as cfg
 import os 
 import pandas as pd
+import copy
+import numpy as np
 
 from transcript import read_full_transcript_phrase,read_full_transcript_word,read_full_transcript_segment
 
@@ -21,7 +23,7 @@ def get_words_df(meeting_name):
         df_words.append(read_full_transcript_word(meeting_path,participant))
     
     df_whole_words = pd.concat(df_words)
-    df_whole_words = df_whole_words.reset_index(drop=True)
+    # df_whole_words = df_whole_words.reset_index(drop=True)
     return df_whole_words
 
 def get_segments_df(meeting_name):
@@ -38,6 +40,51 @@ def get_segments_df(meeting_name):
     df_whole_segments = df_whole_segments.reset_index(drop=True)
     return df_whole_segments
 
+def filter_words(df_words,txt,w1):
+    word_type = df_words['id'].loc[df_words['id']==w1].values[0]
+    if "w" in word_type:
+        return txt
+    elif (df_words['Description'].loc[df_words['id']==w1].values[0]) and ("disfmarker" not in word_type) and ("pause" not in word_type):
+        txt=('[',df_words['Description'].loc[df_words['id']==w1].values[0],']')
+        return"".join(map(str, txt))
+    elif "pause" in word_type:
+        duration = float(df_words['EndTime'].loc[df_words['id']==w1])-float(df_words['StartTime'].loc[df_words['id']==w1])
+        return ("[pause - "+str(round(duration,4))+"s]")
+    elif "disfmarker" in df_words['id'].loc[df_words['id']==w1].values[0]:
+        return "[Diskmarker]"
+
+def combine_df(df_words,df_segments):
+    df_final = copy.deepcopy(df_segments)
+    df_final['Text'] = None
+    for i,row in df_final.iterrows():
+        words_id = (row["words_id"]).split("#")
+        words = words_id[1].split("..")
+
+        w1 = words[0]
+        if len(words)==1:
+            txt = df_words['Text'].loc[df_words['id']==w1[3:len(w1)-1]].values[0]
+            df_final['Text'].loc[i]=filter_words(df_words,txt,w1[3:len(w1)-1])
+        else:
+            w2 = words[1]
+            word_inter = get_all_words(df_words,w1,w2,df_final['Participant2'].loc[i])
+            df_final['Text'].loc[i]=word_inter
+
+    # return df_final 
+    return df_final.drop("words_id",axis=1)
+
+def get_all_words(df_words,w1,w2,participant):
+    #order df_words by start time
+    index_w1 = df_words[df_words['id']==w1[3:len(w1)-1]].index.values[0]
+    index_w2 = df_words[df_words['id']==w2[3:len(w2)-1]].index.values[0]
+    words=[]
+    for i in range(index_w1-1,index_w2):
+        if df_words['Participant'].iloc[i]==participant:
+            txt = df_words['Text'].iloc[i]
+            words.append(filter_words(df_words,txt,df_words['id'].iloc[i]))
+    
+    return " ".join(map(str, words))
+
+
 
 if __name__ == "__main__":
     meeting_name = "Bdb001"
@@ -49,4 +96,8 @@ if __name__ == "__main__":
     # df_words.to_csv(("out\\"+meeting_name+"_words"), sep='\t')
 
     df_segments = get_segments_df(meeting_name)
-    df_segments.to_csv(("out\\"+meeting_name+"_segments"), sep='\t')
+    # df_segments.to_csv(("out\\"+meeting_name+"_segments"), sep='\t')
+
+    df_segments_final = combine_df(df_words,df_segments)
+    df_segments_final.to_csv(("out\\"+meeting_name+"_segments_final"), sep='\t')
+

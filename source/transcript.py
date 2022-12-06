@@ -43,14 +43,16 @@ def read_full_transcript_word(path,participant):
         df_vocalsound = parse_segment_nodes_word(segment_nodes,participant,"vocalsound")
         segment_nodes = xml.xpath("//nonvocalsound")
         df_nonvocalsound = parse_segment_nodes_word(segment_nodes,participant,"nonvocalsound")
-        segment_nodes = xml.xpath("//comments")
-        df_comments = parse_segment_nodes_word(segment_nodes,participant,"comments")
+        segment_nodes = xml.xpath("//comment")
+        df_comments = parse_segment_nodes_word(segment_nodes,participant,"comment")
         segment_nodes = xml.xpath("//disfmarker")
         df_disfmarker = parse_segment_nodes_word(segment_nodes,participant,"disfmarker")
         segment_nodes = xml.xpath("//pause")
         df_pause = parse_segment_nodes_word(segment_nodes,participant,"pause")
     
     df_whole = pd.concat([df_vocalsound,df_word,df_nonvocalsound,df_comments,df_disfmarker,df_pause])
+    df_whole.set_index('index',inplace=True)
+    df_whole.sort_index(ascending=True,inplace=True)
     return df_whole
 
 
@@ -60,6 +62,7 @@ def parse_segment_nodes_word(segment_nodes: List[Element],participant,feature):
         row = []
         if feature=="w":
             row = {
+                "index":node.sourceline-2,
                 "id": node.attrib["{http://nite.sourceforge.net/}id"],
                 "StartTime": node.attrib["starttime"],
                 "EndTime": node.attrib["endtime"],
@@ -72,29 +75,30 @@ def parse_segment_nodes_word(segment_nodes: List[Element],participant,feature):
                 row['qut']=node.attrib["qut"]
             if "t" in node.attrib:
                 row['t']=node.attrib["t"]
-            
+
             raw_text = node.text
             if raw_text is None:
                 continue
             clean_text = raw_text.replace("\n", "").strip()
             row["Text"] = clean_text
             
-        elif (feature=="vocalsound") | (feature=="nonvocalsound") | (feature=="comment"):
+        elif (feature=="vocalsound") or (feature=="nonvocalsound") or (feature=="comment"):
             row = {
+                "index":node.sourceline-2,
                 "id": node.attrib["{http://nite.sourceforge.net/}id"],
                 "StartTime": node.attrib["starttime"],
                 "EndTime": node.attrib["endtime"],
                 "Participant": participant,
                 "Description": node.attrib["description"],
             }
-        elif (feature=="disfmarker") | (feature=="pause"):
+        elif (feature=="disfmarker") or (feature=="pause"):
             row = {
+                "index":node.sourceline-2,
                 "id": node.attrib["{http://nite.sourceforge.net/}id"],
                 "StartTime": node.attrib["starttime"],
                 "EndTime": node.attrib["endtime"],
                 "Participant": participant,
             }
-
         rows.append(row)
 
     return pd.DataFrame(rows)
@@ -103,19 +107,33 @@ def read_full_transcript_segment(path: str,participant):
     with open(path,"r") as file:
         xml = objectify.parse(file)
         segment_nodes = xml.xpath("//segment")
-        return parse_segment_nodes_segment(segment_nodes,participant)
+        df_segs = parse_segment_nodes_segment(segment_nodes,participant,"segment",None)
+        segment_nodes = xml.xpath("//segment/*")
+        df_word_ids = parse_segment_nodes_segment(segment_nodes,participant,"nite:child",df_segs)
+        return df_word_ids
 
-def parse_segment_nodes_segment(segment_nodes: List[Element],participant):
-    rows = []
+def parse_segment_nodes_segment(segment_nodes: List[Element],participant,feature,segments):
+    if feature=="segment":
+        rows = []
+    else:
+        segments['words_id']=None
+    
+    counter=0
     for node in segment_nodes:
-        row = {
-            "id": node.attrib["{http://nite.sourceforge.net/}id"],
-            "StartTime": node.attrib["starttime"],
-            "EndTime": node.attrib["endtime"],
-            "Participant1": node.attrib["participant"],
-            "Participant2": participant,
-            "Timing Provenance": node.attrib["timing-provenance"],
-        }
-        rows.append(row)
-
-    return pd.DataFrame(rows)
+        if feature=="segment":
+            row = {
+                "id": node.attrib["{http://nite.sourceforge.net/}id"],
+                "StartTime": node.attrib["starttime"],
+                "EndTime": node.attrib["endtime"],
+                "Participant1": node.attrib["participant"],
+                "Participant2": participant,
+                "Timing Provenance": node.attrib["timing-provenance"],
+            }
+            rows.append(row)
+        if feature=="nite:child":
+            segments['words_id'].loc[counter]=node.attrib["href"]
+            counter+=1
+    if feature=="segment":
+        return pd.DataFrame(rows)
+        
+    return segments
