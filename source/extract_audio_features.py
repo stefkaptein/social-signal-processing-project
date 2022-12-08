@@ -1,21 +1,24 @@
 import pandas as pd
 
-#this file will extract the audio features of the meeting specified below into a file "out\meeting_name_audio_features_of_segments"
+# this file will extract the audio features of the meeting specified below into a file
+# "out\meeting_name_audio_features_of_segments"
 meeting_name = "Bed002"
 
-#explanation of the features:
-#f0_means and f0_std are all the recorded f0_means, f0_std values in a segment. There might be none, one or multiple values
-#pause is how much time there is between the end of speaking in segmentA and the start of speech in segmentB
-    #if this number is positive there was a break. if it is negative the speech overlapped
-#speakerchange indicates whether the speaker of segmentA and segmentB are the same speakerchange=1 or not speakerchange=0
+# explanation of the features: f0_means and f0_std are all the recorded f0_means, f0_std values in a segment. There
+# might be none, one or multiple values pause is how much time there is between the end of speaking in segmentA and
+# the start of speech in segmentB if this number is positive there was a break. if it is negative the speech
+# overlapped speakerchange indicates whether the speaker of segmentA and segmentB are the same speakerchange=1 or not
+# speakerchange=0
+
 
 # loads the segments, sorts them according to starting time and saves them
 def sort_segments(path):
     segments = pd.read_csv(path, sep=';')
     segments_sorted = segments.sort_values(by=['StartTime'])
     segments_sorted.to_csv(("out\\"+meeting_name+"_segments_final_sorted"), sep=';')
-    
-#Input: path to sorted segments
+
+
+# Input: path to sorted segments
 # iterates throught the adjacent pairs of segements and extracts the audio features
 def iterate_through_pairs(path):
     seg = pd.read_csv(path, sep=';')

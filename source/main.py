@@ -117,6 +117,7 @@ def get_all_words(df_words,w1,w2,participant):
     
     return " ".join(map(str, words))
 
+
 def get_all_prosodies_for_words(df_prosodies,w1,w2,participant, df_words):
     meeting, w, index_w1 = w1[3:len(w1)-1].split('.')
     meeting, w, index_w2 = w2[3:len(w2)-1].split('.')
