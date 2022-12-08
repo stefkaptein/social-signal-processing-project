@@ -103,6 +103,44 @@ def parse_segment_nodes_word(segment_nodes: List[Element],participant,feature):
 
     return pd.DataFrame(rows)
 
+def read_full_transcript_prosody(path,participant):
+    with open(path,"r") as file:
+        xml = objectify.parse(file)
+        segment_nodes = xml.xpath("//prosody")
+        df_prosody = parse_segment_nodes_prosody(segment_nodes,participant)
+        segment_nodes = xml.xpath("//prosody/*")
+        df_prosody = parse_segment_nodes_children(segment_nodes, participant, df_prosody)
+    
+    df_prosody.set_index('index',inplace=True)
+    df_prosody.sort_index(ascending=True,inplace=True)
+    return df_prosody
+
+def parse_segment_nodes_prosody(segment_nodes: List[Element],participant):
+    rows = []
+    for node in segment_nodes:
+        row = []
+        row = {
+            "index":node.sourceline-2,
+            "id": node.attrib["{http://nite.sourceforge.net/}id"],
+            "f0_mean": node.attrib["f0_mean"],
+            "f0_std": node.attrib["f0_std"],
+            "duration": node.attrib["duration"],
+            "energy": node.attrib["energy"],
+            "tfidf": node.attrib["tfidf"],
+            "Participant": participant,
+        }
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+def parse_segment_nodes_children(segment_nodes: List[Element],participant,df_prosody):
+    df_prosody['words_id']=None
+    counter = 0
+    for node in segment_nodes:
+        id = node.attrib["href"].split('#')[1]
+        df_prosody['words_id'].loc[counter]=id
+        counter+=1
+    return df_prosody
+
 def read_full_transcript_segment(path: str,participant):
     with open(path,"r") as file:
         xml = objectify.parse(file)
