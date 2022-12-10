@@ -7,7 +7,7 @@ import numpy as np
 
 from transcript import read_full_transcript_phrase,read_full_transcript_word,read_full_transcript_segment,read_full_transcript_topic_segments, read_full_transcript_prosody
 
-meeting_name = "Bed002"
+meeting_name = "Bdb001"
 
 
 def get_phrases_df(meeting_name):
@@ -39,6 +39,9 @@ def get_prosodies(meeting_name):
         participant = path[7]
         df_prosodies.append(read_full_transcript_prosody(meeting_path, participant))
     
+    if len(df_prosodies)==0:
+        print("no prosody file for",meeting_name)
+        return None
     df_whole_prosodies = pd.concat(df_prosodies)
     df_whole_prosodies = df_whole_prosodies.reset_index(drop=True)
     return df_whole_prosodies
@@ -78,10 +81,11 @@ def filter_prosodies(df_prosodies,w1):
 def combine_df(df_words,df_segments,df_prosodies):
     df_final = copy.deepcopy(df_segments)
     df_final['Text'] = None
-    df_final['f0_means'] = None
-    df_final['f0_stds'] = None
+    if df_prosodies != None:
+        df_final['f0_means'] = None
+        df_final['f0_stds'] = None
     for i,row in df_final.iterrows():
-        if i%100==0: print(i)
+        # if i%100==0: print(i)
         words_id = (row["words_id"]).split("#")
         words = words_id[1].split("..")
         w1 = words[0]
@@ -89,16 +93,19 @@ def combine_df(df_words,df_segments,df_prosodies):
             txt = df_words['Text'].loc[df_words['id']==w1[3:len(w1)-1]].values[0]
             
             df_final['Text'].loc[i]=filter_words(df_words,txt,w1[3:len(w1)-1])
-            f0_means, f0_stds = filter_prosodies(df_prosodies,w1[3:len(w1)-1])
-            df_final['f0_means'].loc[i]= f0_means
-            df_final['f0_stds'].loc[i]= f0_stds
+            if df_prosodies != None:
+                f0_means, f0_stds = filter_prosodies(df_prosodies,w1[3:len(w1)-1])
+                df_final['f0_means'].loc[i]= f0_means
+                df_final['f0_stds'].loc[i]= f0_stds
         else:
             w2 = words[1]
             word_inter = get_all_words(df_words,w1,w2,df_final['Participant2'].loc[i])
-            f0_means, f0_stds = get_all_prosodies_for_words(df_prosodies, w1, w2, df_final['Participant2'].loc[i], df_words)
             df_final['Text'].loc[i]=word_inter
-            df_final['f0_means'].loc[i] = f0_means
-            df_final['f0_stds'].loc[i] = f0_stds
+
+            if df_prosodies != None:
+                f0_means, f0_stds = get_all_prosodies_for_words(df_prosodies, w1, w2, df_final['Participant2'].loc[i], df_words)
+                df_final['f0_means'].loc[i] = f0_means
+                df_final['f0_stds'].loc[i] = f0_stds
 
     # return df_final 
     return df_final.drop("words_id",axis=1)
@@ -148,23 +155,33 @@ def get_all_prosodies_for_words(df_prosodies,w1,w2,participant, df_words):
                 f0_stds.append(f0_std)
     return f0_means, f0_stds
 
+def get_topic_segments_df(meeting_name):
+    main_path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\audio\ICSIplus\Contributions\TopicSegmentation\\"+meeting_name+".topic.xml"))))
+    df_topic_segments = read_full_transcript_topic_segments(main_path)
+    return df_topic_segments
+
 
 if __name__ == "__main__":
     # df_phrases = get_phrases_df(meeting_name)
     # df_phrases.to_csv(("out\\"+meeting_name+"_phrases"), sep='\t')
 
     df_words = get_words_df(meeting_name)
-    df_words.to_csv(("out\\"+meeting_name+"_words"), sep='\t')
+    print(df_words)
+    # df_words.to_csv(("out\\"+meeting_name+"_words"), sep='\t')
 
     df_prosodies = get_prosodies(meeting_name)
-    df_prosodies.to_csv(("out\\"+meeting_name+"_prosodies"), sep=';')
+    print(df_prosodies)
+    # df_prosodies.to_csv(("out\\"+meeting_name+"_prosodies"), sep=';')
 
     df_segments = get_segments_df(meeting_name)
-    df_segments.to_csv(("out\\"+meeting_name+"_segments"), sep='\t')
+    print(df_segments)
+    # df_segments.to_csv(("out\\"+meeting_name+"_segments"), sep='\t')
 
     df_segments_final = combine_df(df_words,df_segments, df_prosodies)
-    df_segments_final.to_csv(("out\\"+meeting_name+"_segments_final"), sep=';')
+    print(df_segments_final)
+    # df_segments_final.to_csv(("out\\"+meeting_name+"_segments_final"), sep=';')
 
     df_topic_segments = get_topic_segments_df(meeting_name)
-    df_topic_segments.to_csv(("out\\"+meeting_name+"_topic_segments"), sep='\t')
+    print(df_topic_segments)
+    # df_topic_segments.to_csv(("out\\"+meeting_name+"_topic_segments"), sep='\t')
 
