@@ -5,7 +5,7 @@ import pandas as pd
 import copy
 import numpy as np
 
-from transcript import read_full_transcript_phrase,read_full_transcript_word,read_full_transcript_segment, read_full_transcript_prosody
+from transcript import read_full_transcript_phrase,read_full_transcript_word,read_full_transcript_segment,read_full_transcript_topic_segments, read_full_transcript_prosody
 
 meeting_name = "Bed002"
 
@@ -117,6 +117,20 @@ def get_all_words(df_words,w1,w2,participant):
     
     return " ".join(map(str, words))
 
+def filter_words(df_words,txt,w1):
+    word_id = df_words['id'].loc[df_words['id']==w1].values[0]
+    if "w" in word_id:
+        return txt
+    elif (df_words['Description'].loc[df_words['id']==w1].values[0]) and ("disfmarker" not in word_id) and ("pause" not in word_id):
+        txt=('[',df_words['Description'].loc[df_words['id']==w1].values[0],']')
+        return"".join(map(str, txt))
+    elif "pause" in word_id:
+        if (meeting_name+".pause.1" != word_id):
+            duration = float(df_words['EndTime'].loc[df_words['id']==w1])-float(df_words['StartTime'].loc[df_words['id']==w1])
+            return ("[Pause - "+str(round(duration,4))+"s]")
+        return "[Pause]"
+    elif "disfmarker" in df_words['id'].loc[df_words['id']==w1].values[0]:
+        return "[Diskmarker]"
 
 def get_all_prosodies_for_words(df_prosodies,w1,w2,participant, df_words):
     meeting, w, index_w1 = w1[3:len(w1)-1].split('.')
@@ -150,4 +164,7 @@ if __name__ == "__main__":
 
     df_segments_final = combine_df(df_words,df_segments, df_prosodies)
     df_segments_final.to_csv(("out\\"+meeting_name+"_segments_final"), sep=';')
+
+    df_topic_segments = get_topic_segments_df(meeting_name)
+    df_topic_segments.to_csv(("out\\"+meeting_name+"_topic_segments"), sep='\t')
 
