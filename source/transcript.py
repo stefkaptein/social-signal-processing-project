@@ -3,10 +3,6 @@ from lxml import objectify
 
 import pandas as pd
 from lxml.etree import Element
-from lxml.objectify import ObjectifiedElement, StringElement
-from pandas import DataFrame
-import copy
-
 
 
 def read_full_transcript_phrase(path: str):
@@ -175,106 +171,110 @@ def parse_segment_nodes_segment(segment_nodes: List[Element], participant, featu
                 "Timing Provenance": node.attrib["timing-provenance"],
             }
             rows.append(row)
-        elif feature=="nite:child":
-            segments['words_id'].loc[counter]=node.attrib["href"]
-            counter+=1
-    if feature=="segment":
+        elif feature == "nite:child":
+            segments['words_id'].loc[counter] = node.attrib["href"]
+            counter += 1
+    if feature == "segment":
         return pd.DataFrame(rows)
 
     return segments
 
-def read_full_transcript_topic_segments(path):  
+
+def read_full_transcript_topic_segments(path):
     lines = open(path, 'r').readlines()[2:]
     all_segments = []
 
     curr_seg_id = None
     prev_space = 0
-    lvl_counter=0
+    lvl_counter = 0
     is_new_topic = True
     for line in lines:
-        curr_space=len(line) - len(line.lstrip(' '))
-        if "topic" in line and not "/topic"in line:
-                
-            new_topic_id = line.split(" ")[curr_space+1]
-            new_topic_id = new_topic_id[9:len(new_topic_id)-1]
-            
-            if curr_space>prev_space:
-                lvl_counter+=1
-            elif curr_space<prev_space:
-                lvl_counter-=1
+        curr_space = len(line) - len(line.lstrip(' '))
+        if "topic" in line and not "/topic" in line:
 
-            all_segments.append([new_topic_id,lvl_counter,None,None,False])
-            
+            new_topic_id = line.split(" ")[curr_space + 1]
+            new_topic_id = new_topic_id[9:len(new_topic_id) - 1]
+
+            if curr_space > prev_space:
+                lvl_counter += 1
+            elif curr_space < prev_space:
+                lvl_counter -= 1
+
+            all_segments.append([new_topic_id, lvl_counter, None, None, False])
+
             prev_space = curr_space
-            is_new_topic=True
-        elif not "topic"in line and not "root" in line:
-            curr_seg_id = line.split(" ")[curr_space+1]
-            curr_seg_ids=curr_seg_id[24:len(curr_seg_id)-4].split("..")
+            is_new_topic = True
+        elif not "topic" in line and not "root" in line:
+            curr_seg_id = line.split(" ")[curr_space + 1]
+            curr_seg_ids = curr_seg_id[24:len(curr_seg_id) - 4].split("..")
             if is_new_topic:
-                curr_seg_id = curr_seg_ids[0][3:len(curr_seg_ids[0])-1]
-                all_segments[len(all_segments)-1][2] = curr_seg_id
-                is_new_topic=False
+                curr_seg_id = curr_seg_ids[0][3:len(curr_seg_ids[0]) - 1]
+                all_segments[len(all_segments) - 1][2] = curr_seg_id
+                is_new_topic = False
             else:
-                curr_seg_id = curr_seg_ids[0][3:len(curr_seg_ids[0])-1] if len(curr_seg_ids)==1 else curr_seg_ids[1][3:len(curr_seg_ids[1])-1]
+                curr_seg_id = curr_seg_ids[0][3:len(curr_seg_ids[0]) - 1] if len(curr_seg_ids) == 1 else curr_seg_ids[
+                                                                                                             1][3:len(
+                    curr_seg_ids[1]) - 1]
         elif "/topic" in line:
             for seg in all_segments:
-                if seg[1]*3>=curr_space and not seg[4]:
+                if seg[1] * 3 >= curr_space and not seg[4]:
                     seg[3] = curr_seg_id
-                    if seg[1]*3==curr_space:
-                        seg[4]=True
-    
+                    if seg[1] * 3 == curr_space:
+                        seg[4] = True
+
     [j.pop(4) for j in all_segments]
-    df_topic_segments = pd.DataFrame(data = all_segments,columns=['Topic_id','Level','First Segment id','Last Segment id'])
+    df_topic_segments = pd.DataFrame(data=all_segments,
+                                     columns=['Topic_id', 'Level', 'First Segment id', 'Last Segment id'])
     return df_topic_segments
-    
 
 
 def new_topic(curr_segments):
-    first_seg=None
-    last_seg=None
-    if len(curr_segments)!=0:
+    first_seg = None
+    last_seg = None
+    if len(curr_segments) != 0:
         first_seg = curr_segments[0]
-        last_seg = curr_segments[len(curr_segments)-1]
+        last_seg = curr_segments[len(curr_segments) - 1]
 
-    return first_seg,last_seg,curr_segments
+    return first_seg, last_seg, curr_segments
 
-def parse_segment_nodes_topic_segments(segment_nodes: List[Element],feature,segments):
-    if feature=="topic":
+
+def parse_segment_nodes_topic_segments(segment_nodes: List[Element], feature, segments):
+    if feature == "topic":
         rows = []
     else:
-        segments['Segment1_id']=None
-        segments['Segment2_id']=None
+        segments['Segment1_id'] = None
+        segments['Segment2_id'] = None
 
-        counter=0
-        topic_seg_counter=0
-        next_seg = segments['Line'].loc[topic_seg_counter+1]
-        first_seg_id=segment_nodes[counter].attrib.values()[0]
-        last_seg_id=None
+        counter = 0
+        topic_seg_counter = 0
+        next_seg = segments['Line'].loc[topic_seg_counter + 1]
+        first_seg_id = segment_nodes[counter].attrib.values()[0]
+        last_seg_id = None
 
     rows = []
-    i=0
+    i = 0
     while i < len(segment_nodes):
         node = segment_nodes[i]
-        if feature=="topic":
+        if feature == "topic":
             row = {
                 "id": node.attrib["{http://nite.sourceforge.net/}id"],
                 "Description": node.attrib["description"],
-                "Line":node.sourceline
+                "Line": node.sourceline
             }
             rows.append(row)
-        elif feature=="nite:child":
+        elif feature == "nite:child":
             seg_line = node.sourceline
 
-            if seg_line>next_seg:
-                last_seg_id = segment_nodes[i-2].attrib.values()[0]
-                print(first_seg_id,last_seg_id)
+            if seg_line > next_seg:
+                last_seg_id = segment_nodes[i - 2].attrib.values()[0]
+                print(first_seg_id, last_seg_id)
 
-                topic_seg_counter+=1
-                next_seg = segments['Line'].loc[topic_seg_counter+1]
+                topic_seg_counter += 1
+                next_seg = segments['Line'].loc[topic_seg_counter + 1]
                 first_seg_id = node.attrib.values()[0]
-        i+=1
+        i += 1
 
-    if feature=="topic":
+    if feature == "topic":
         return pd.DataFrame(rows)
-        
+
     return segments

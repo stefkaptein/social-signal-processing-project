@@ -24,3 +24,9 @@ def get_sentence_similarity(dataframe: pd.DataFrame, text_col_name: str) -> pd.D
         similarity_on_boundary.append(cosine_similarity(encodings[i].reshape(1, -1), encodings[i + 1].reshape(1, -1)))
     res_df = pd.DataFrame({"id": id_col, "similarity": similarity_on_boundary})
     return res_df
+
+
+def extract_text_features_and_write_to_file(meeting_name: str):
+    segments_df = pd.read_csv(f"../out/{meeting_name}_segments_final_sorted.csv", sep=';')
+    res_df = get_sentence_similarity(segments_df, "Text")
+    res_df.to_csv(f"../out/{meeting_name}_text_features_of_segments.csv", sep=';', index=False)

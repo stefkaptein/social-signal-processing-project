@@ -1,14 +1,34 @@
 import pandas as pd
+from lxml import objectify
 
-from source.text_features import get_sentence_similarity
+from source.data_parser import extract_all_data_for_meeting_and_write_to_files
+from source.extract_audio_features import extract_audio_features_and_write_to_file
+from source.text_features import extract_text_features_and_write_to_file
 
 
-def create_feature_vector():
-    df = pd.read_csv("../out/Bed002_segments_final_sorted.csv", sep=';')
-    text_features = get_sentence_similarity(df, "Text")
-    audio_features = pd.read_csv("../out/Bed002_audio_features_of_segments.csv", sep=';')
+def create_feature_vector(meeting_name: str) -> pd.DataFrame:
+    text_features = pd.read_csv(f"../out/{meeting_name}_text_features_of_segments.csv", sep=';')
+    audio_features = pd.read_csv("../out/{meeting_name}_audio_features_of_segments.csv", sep=';')
     return audio_features.merge(text_features, left_on='segID', right_on='id', how='inner')
 
 
+def read_metadata(path: str):
+    with open(path, "r") as file:
+        xml = objectify.parse(file)
+        observations = xml.xpath("//observation")
+        meeting_names = []
+        for obs in observations:
+            meeting_names.append(obs.attrib["name"])
+        return meeting_names
+
+
 if __name__ == "__main__":
-    feature_vector = create_feature_vector()
+    meetings = read_metadata("../data/ICSIplus/ICSI-metadata.xml")
+    features = pd.DataFrame()
+    for meeting in meetings:
+        extract_all_data_for_meeting_and_write_to_files(meeting)
+        extract_audio_features_and_write_to_file(meeting)
+        extract_text_features_and_write_to_file(meeting)
+        meeting_feature_vector = create_feature_vector(meeting)
+        features.append(meeting_feature_vector)
+    features.to_csv("../results/features.csv", sep=';', index=False)
