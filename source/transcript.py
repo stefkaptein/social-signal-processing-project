@@ -162,14 +162,18 @@ def parse_segment_nodes_segment(segment_nodes: List[Element], participant, featu
     counter = 0
     for node in segment_nodes:
         if feature == "segment":
+            # print(node.attrib)
             row = {
                 "id": node.attrib["{http://nite.sourceforge.net/}id"],
                 "StartTime": node.attrib["starttime"],
                 "EndTime": node.attrib["endtime"],
                 "Participant1": node.attrib["participant"],
                 "Participant2": participant,
-                "Timing Provenance": node.attrib["timing-provenance"],
             }
+            if "closemic" not in node.attrib:
+                row['Timing Provenance'] = node.attrib["timing-provenance"]
+            else:
+                row['Closemic'] = node.attrib["closemic"]
             rows.append(row)
         elif feature == "nite:child":
             segments['words_id'].loc[counter] = node.attrib["href"]
@@ -267,7 +271,7 @@ def parse_segment_nodes_topic_segments(segment_nodes: List[Element], feature, se
 
             if seg_line > next_seg:
                 last_seg_id = segment_nodes[i - 2].attrib.values()[0]
-                print(first_seg_id, last_seg_id)
+                # print(first_seg_id, last_seg_id)
 
                 topic_seg_counter += 1
                 next_seg = segments['Line'].loc[topic_seg_counter + 1]

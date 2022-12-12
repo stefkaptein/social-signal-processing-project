@@ -27,6 +27,6 @@ def get_sentence_similarity(dataframe: pd.DataFrame, text_col_name: str) -> pd.D
 
 
 def extract_text_features_and_write_to_file(meeting_name: str):
-    segments_df = pd.read_csv(f"../out/{meeting_name}_segments_final_sorted.csv", sep=';')
+    segments_df = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_segments_final_sorted.csv", sep=';')
     res_df = get_sentence_similarity(segments_df, "Text")
-    res_df.to_csv(f"../out/{meeting_name}_text_features_of_segments.csv", sep=';', index=False)
+    res_df.to_csv(f"../social-signal-processing-project/out/{meeting_name}_text_features_of_segments.csv", sep=';', index=False)

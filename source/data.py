@@ -6,3 +6,6 @@ Bmr025 Bmr026 Bmr027 Bmr029 Bns001 Bns002 Bns003 Bro003 Bro004 Bro005
 Bro007 Bro008 Bro010 Bro011 Bro012 Bro013 Bro014 Bro015 Bro016 Bro017
 Bro018 Bro019 Bro021 Bro022 Bro023 Bro024 Bro025 Bro026 Bro027 Bro028
 Bsr001 Btr001 Btr002 Buw001""".split(" ")
+
+def already_considered():
+    return """Bed002 """.split(" ")

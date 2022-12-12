@@ -12,7 +12,7 @@ import pandas as pd
 def sort_segments(path, meeting_name):
     segments = pd.read_csv(path, sep=';')
     segments_sorted = segments.sort_values(by=['StartTime'])
-    segments_sorted.to_csv(("../out/" + meeting_name + "_segments_final_sorted.csv"), sep=';')
+    segments_sorted.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_segments_final_sorted.csv"), sep=';')
 
 
 # Input: path to sorted segments
@@ -48,10 +48,10 @@ def iterate_through_pairs(path, meeting_name):
                 'pause': pause,
                 'speakerChange': speakerChange}])]
         )
-    audio_dat.to_csv(("../out/" + meeting_name + "_audio_features_of_segments.csv"), sep=';')
+    audio_dat.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_audio_features_of_segments.csv"), sep=';')
 
 
 def extract_audio_features_and_write_to_file(meeting_name):
-    sort_segments("../out/" + meeting_name + "_segments_final.csv", meeting_name)
-    iterate_through_pairs("../out/" + meeting_name + "_segments_final_sorted.csv", meeting_name)
+    sort_segments("../social-signal-processing-project/out/" + meeting_name + "_segments_final.csv", meeting_name)
+    iterate_through_pairs("../social-signal-processing-project/out/" + meeting_name + "_segments_final_sorted.csv", meeting_name)
 # data.to_csv(("out\\"+meeting_name+"_audio_features_of_segments"), sep=';')
