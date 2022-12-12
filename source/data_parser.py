@@ -3,14 +3,7 @@ import pandas as pd
 import copy
 
 from transcript import read_full_transcript_phrase, read_full_transcript_word, read_full_transcript_segment, \
-    read_full_transcript_prosody
-import copy
-import os
-
-import pandas as pd
-
-from transcript import read_full_transcript_phrase, read_full_transcript_word, read_full_transcript_segment, \
-    read_full_transcript_prosody
+    read_full_transcript_prosody,read_full_transcript_topic_segments
 
 meeting_name = "Bed002"
 
@@ -151,19 +144,32 @@ def get_all_prosodies_for_words(df_prosodies, w1, w2, participant, df_words):
                 f0_stds.append(f0_std)
     return f0_means, f0_stds
 
+def get_topic_segments_df(meeting_name):
+    main_path = (os.path.realpath(os.path.join(os.getcwd(), ("data\ICSIplus\Contributions\TopicSegmentation\\"+meeting_name+".topic.xml"))))
+    df_topic_segments = read_full_transcript_topic_segments(main_path)
+    return df_topic_segments
+
 
 if __name__ == "__main__":
     # df_phrases = get_phrases_df(meeting_name)
     # df_phrases.to_csv(("out\\"+meeting_name+"_phrases"), sep='\t')
 
     df_words = get_words_df(meeting_name)
-    df_words.to_csv(("out\\" + meeting_name + "_words"), sep='\t')
+    print(df_words)
+    # df_words.to_csv(("out\\" + meeting_name + "_words"), sep='\t')
 
     df_prosodies = get_prosodies(meeting_name)
-    df_prosodies.to_csv(("out\\" + meeting_name + "_prosodies"), sep=';')
+    print(df_prosodies)
+    # df_prosodies.to_csv(("out\\" + meeting_name + "_prosodies"), sep=';')
 
     df_segments = get_segments_df(meeting_name)
-    df_segments.to_csv(("out\\" + meeting_name + "_segments"), sep='\t')
+    print(df_segments)
+    # df_segments.to_csv(("out\\" + meeting_name + "_segments"), sep='\t')
 
     df_segments_final = combine_df(df_words, df_segments, df_prosodies)
-    df_segments_final.to_csv(("out\\" + meeting_name + "_segments_final"), sep=';')
+    print(df_segments_final)
+    # df_segments_final.to_csv(("out\\" + meeting_name + "_segments_final"), sep=';')
+
+    df_topic_segments = get_topic_segments_df(meeting_name)
+    print(df_topic_segments)
+    # df_topic_segments.to_csv(("out\\"+meeting_name+"_topic_segments"), sep=';')
