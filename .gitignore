@@ -6,3 +6,5 @@ data/
 source/__pycache__/
 
 .DS_Store
+
+out/
