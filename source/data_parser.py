@@ -96,7 +96,7 @@ def combine_df(meeting_name, df_words, df_segments, df_prosodies):
         if len(words) == 1:
             txt = df_words['Text'].loc[df_words['id'] == w1[3:len(w1) - 1]].values[0]
 
-            df_final['Text'].loc[i] = filter_words(df_words, txt, w1[3:len(w1) - 1])
+            df_final['Text'].loc[i] = filter_words(meeting_name, df_words, txt, w1[3:len(w1) - 1])
             f0_means, f0_stds = filter_prosodies(df_prosodies, w1[3:len(w1) - 1])
             df_final['f0_means'].loc[i] = f0_means
             df_final['f0_stds'].loc[i] = f0_stds

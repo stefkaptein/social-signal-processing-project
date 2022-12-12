@@ -35,17 +35,20 @@ def iterate_through_pairs(path, meeting_name):
         pause = seg['StartTime'][ind + 1] - seg['EndTime'][ind]
         f0_mean = seg['f0_means'][ind]
         f0_stds = seg['f0_stds'][ind]
-        audio_dat = audio_dat.append({
-            'segID': id,
-            'StartTimeA': startA,
-            'EndTimeA': endA,
-            'StartTimeB': startB,
-            'EndTimeB': endB,
-            'f0_means': f0_mean,
-            'f0_stds': f0_stds,
-            'pause': pause,
-            'speakerChange': speakerChange}, ignore_index=True)
-    audio_dat.to_csv(("out\\" + meeting_name + "_audio_features_of_segments.csv"), sep=';')
+        audio_dat = pd.concat([
+            audio_dat,
+            pd.DataFrame([{
+                'segID': id,
+                'StartTimeA': startA,
+                'EndTimeA': endA,
+                'StartTimeB': startB,
+                'EndTimeB': endB,
+                'f0_means': f0_mean,
+                'f0_stds': f0_stds,
+                'pause': pause,
+                'speakerChange': speakerChange}])]
+        )
+    audio_dat.to_csv(("../out/" + meeting_name + "_audio_features_of_segments.csv"), sep=';')
 
 
 def extract_audio_features_and_write_to_file(meeting_name):
