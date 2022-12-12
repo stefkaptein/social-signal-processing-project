@@ -170,10 +170,8 @@ def parse_segment_nodes_segment(segment_nodes: List[Element], participant, featu
                 "Participant1": node.attrib["participant"],
                 "Participant2": participant,
             }
-            if "closemic" not in node.attrib:
+            if "timing-provenance" in node.attrib:
                 row['Timing Provenance'] = node.attrib["timing-provenance"]
-            else:
-                row['Closemic'] = node.attrib["closemic"]
             rows.append(row)
         elif feature == "nite:child":
             segments['words_id'].loc[counter] = node.attrib["href"]
