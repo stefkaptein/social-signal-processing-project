@@ -16,5 +16,6 @@ def get_words_file_paths(meeting_name: str) -> List[str]:
             file_paths.append(f"{dir_path}/{filename}")
     return file_paths
 
+
 def get_transcripts_file_path(meeting_name: str) -> str:
     return f"{data_source_path}/transcripts/{meeting_name}.mrt"

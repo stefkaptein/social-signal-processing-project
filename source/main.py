@@ -1,52 +1,14 @@
-from typing import List
-import config as cfg
-import os 
 import pandas as pd
 
-from transcript import read_full_transcript_phrase,read_full_transcript_word,read_full_transcript_segment
+from source.text_features import get_sentence_similarity
 
-def get_phrases_df(meeting_name):
-    path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\text\\transcripts\\"+meeting_name+".mrt"))))
-    df_phrases = read_full_transcript_phrase(path)
-    return df_phrases
 
-def get_words_df(meeting_name):
-    main_path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\audio\ICSIplus\Words\\"))))
-    all_files_names = [f for f in os.listdir(main_path) if os.path.isfile(os.path.join(main_path, f))]
-
-    df_words = []
-    for path in (path for path in all_files_names if meeting_name in path):
-        meeting_path = (main_path+"\\"+path)
-        participant = path[7]
-        df_words.append(read_full_transcript_word(meeting_path,participant))
-    
-    df_whole_words = pd.concat(df_words)
-    df_whole_words = df_whole_words.reset_index(drop=True)
-    return df_whole_words
-
-def get_segments_df(meeting_name):
-    main_path = (os.path.realpath(os.path.join(os.getcwd(), ("source\ICSI_original_transcripts\\audio\ICSIplus\Segments\\"))))
-    all_files_names = [f for f in os.listdir(main_path) if os.path.isfile(os.path.join(main_path, f))]
-
-    df_segments = []
-    for path in (path for path in all_files_names if meeting_name in path):
-        meeting_path = (main_path+"\\"+path)
-        participant = path[7]
-        df_segments.append(read_full_transcript_segment(meeting_path,participant))
-    
-    df_whole_segments = pd.concat(df_segments)
-    df_whole_segments = df_whole_segments.reset_index(drop=True)
-    return df_whole_segments
+def create_feature_vector():
+    df = pd.read_csv("../out/Bed002_segments_final_sorted.csv", sep=';')
+    text_features = get_sentence_similarity(df, "Text")
+    audio_features = pd.read_csv("../out/Bed002_audio_features_of_segments.csv", sep=';')
+    return audio_features.merge(text_features, left_on='segID', right_on='id', how='inner')
 
 
 if __name__ == "__main__":
-    meeting_name = "Bdb001"
-
-    # df_phrases = get_phrases_df(meeting_name)
-    # df_phrases.to_csv(("out\\"+meeting_name+"_phrases"), sep='\t')
-
-    df_words = get_words_df(meeting_name)
-    # df_words.to_csv(("out\\"+meeting_name+"_words"), sep='\t')
-
-    df_segments = get_segments_df(meeting_name)
-    df_segments.to_csv(("out\\"+meeting_name+"_segments"), sep='\t')
+    feature_vector = create_feature_vector()
