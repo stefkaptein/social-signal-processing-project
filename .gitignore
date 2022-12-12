@@ -4,3 +4,5 @@ data/
 .idea/
 
 source/__pycache__/
+
+.DS_Store
