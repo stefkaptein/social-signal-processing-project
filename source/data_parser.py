@@ -23,8 +23,10 @@ def get_words_df(meeting_name):
     for path in (path for path in all_files_names if meeting_name in path):
         meeting_path = (main_path + "\\" + path)
         participant = path[7]
-        df_words.append(read_full_transcript_word(meeting_path, participant))
-
+        words = read_full_transcript_word(meeting_path, participant)
+        if isinstance(words, pd.DataFrame):
+            df_words.append(words)
+    
     df_whole_words = pd.concat(df_words)
     df_whole_words = df_whole_words.reset_index(drop=True)
     return df_whole_words

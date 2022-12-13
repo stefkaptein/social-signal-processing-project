@@ -49,9 +49,11 @@ def read_full_transcript_word(path, participant):
         df_pause = parse_segment_nodes_word(segment_nodes, participant, "pause")
 
     df_whole = pd.concat([df_vocalsound, df_word, df_nonvocalsound, df_comments, df_disfmarker, df_pause])
-    df_whole.set_index('index', inplace=True)
-    df_whole.sort_index(ascending=True, inplace=True)
-    return df_whole
+    if not df_whole.empty:
+        df_whole.set_index('index', inplace=True)
+        df_whole.sort_index(ascending=True, inplace=True)
+        return df_whole
+    return 0
 
 
 def parse_segment_nodes_word(segment_nodes: List[Element], participant, feature):
@@ -162,20 +164,38 @@ def parse_segment_nodes_segment(segment_nodes: List[Element], participant, featu
     counter = 0
     for node in segment_nodes:
         if feature == "segment":
-            # print(node.attrib)
-            row = {
-                "id": node.attrib["{http://nite.sourceforge.net/}id"],
-                "StartTime": node.attrib["starttime"],
-                "EndTime": node.attrib["endtime"],
-                "Participant1": node.attrib["participant"],
-                "Participant2": participant,
-            }
-            if "timing-provenance" in node.attrib:
-                row['Timing Provenance'] = node.attrib["timing-provenance"]
-            rows.append(row)
+            if "type" in node.attrib:
+                if node.attrib['type']!='supersegment':
+                    row = {
+                        "id": node.attrib["{http://nite.sourceforge.net/}id"],
+                        "StartTime": node.attrib["starttime"],
+                        "EndTime": node.attrib["endtime"],
+                        "Participant1": node.attrib["participant"],
+                        "Participant2": participant,
+                    }
+                    if "timing-provenance" in node.attrib:
+                        row['Timing Provenance'] = node.attrib["timing-provenance"]
+                    rows.append(row)
+            else:
+                row = {
+                    "id": node.attrib["{http://nite.sourceforge.net/}id"],
+                    "StartTime": node.attrib["starttime"],
+                    "EndTime": node.attrib["endtime"],
+                    "Participant1": node.attrib["participant"],
+                    "Participant2": participant,
+                }
+                if "timing-provenance" in node.attrib:
+                    row['Timing Provenance'] = node.attrib["timing-provenance"]
+                rows.append(row)
         elif feature == "nite:child":
-            segments['words_id'].loc[counter] = node.attrib["href"]
-            counter += 1
+            if "type" in node.attrib:
+                if node.attrib['type']!='subsegment':
+                    segments['words_id'].loc[counter] = node.attrib["href"]
+                    counter += 1
+            else:
+                segments['words_id'].loc[counter] = node.attrib["href"]
+                counter += 1
+                
     if feature == "segment":
         return pd.DataFrame(rows)
 

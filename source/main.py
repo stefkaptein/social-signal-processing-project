@@ -10,7 +10,7 @@ def create_feature_vector(meeting_name: str) -> pd.DataFrame:
     text_features = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_text_features_of_segments.csv", sep=';')
     audio_features = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_audio_features_of_segments.csv", sep=';')
     final_df = audio_features.merge(text_features, left_on='segID', right_on='id', how='inner')
-    final_df.to_csv(f"../social-signal-processing-project/out/{meeting_name}_final.csv", sep=';', index=False)
+    final_df.to_csv(f"../social-signal-processing-project/results/{meeting_name}_final.csv", sep=';', index=False)
     return final_df
 
 
@@ -23,4 +23,4 @@ if __name__ == "__main__":
         extract_text_features_and_write_to_file(meeting)
         meeting_feature_vector = create_feature_vector(meeting)
         pd.concat([features, meeting_feature_vector])
-    features.to_csv("../results/features.csv", sep=';', index=False)
+    features.to_csv("../social-signal-processing-project/results/all_final.csv", sep=';', index=False)
