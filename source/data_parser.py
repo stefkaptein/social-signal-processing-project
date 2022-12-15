@@ -5,7 +5,8 @@ import copy
 from transcript import read_full_transcript_phrase, read_full_transcript_word, read_full_transcript_segment, \
     read_full_transcript_prosody, read_full_transcript_topic_segments
 
-data_path = "../social-signal-processing-project/data/ICSIplus"
+data_path = "../data/ICSIplus"
+out_path = "../out"
 
 
 def get_phrases_df(meeting_name):
@@ -161,18 +162,18 @@ def extract_all_data_for_meeting_and_write_to_files(meeting_name):
     print("Parsing data for meeting: " + meeting_name)
 
     df_words = get_words_df(meeting_name)
-    df_words.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_words.csv"), sep=';')
+    df_words.to_csv(f"{out_path}/{meeting_name}_words.csv", sep=';')
 
     df_prosodies = get_prosodies(meeting_name)
-    df_prosodies.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_prosodies.csv"), sep=';')
+    df_prosodies.to_csv(f"{out_path}/{meeting_name}_prosodies.csv", sep=';')
 
     df_segments = get_segments_df(meeting_name)
-    df_segments.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_segments.csv"), sep=';')
+    df_segments.to_csv(f"{out_path}/{meeting_name}_segments.csv", sep=';')
 
     df_segments_final = combine_df(meeting_name, df_words, df_segments, df_prosodies)
-    df_segments_final.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_segments_final.csv"), sep=';')
+    df_segments_final.to_csv(f"{out_path}/{meeting_name}_segments_final.csv", sep=';')
 
     df_topic_segments = get_topic_segments_df(meeting_name)
-    df_topic_segments.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_topic_segments.csv"), sep=';')
+    df_topic_segments.to_csv(f"{out_path}/{meeting_name}_topic_segments.csv", sep=';')
 
     print("Parsing data for meeting DONE: " + meeting_name)

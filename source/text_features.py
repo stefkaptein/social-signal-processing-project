@@ -4,6 +4,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 
 
+out_path = "../out"
+
+
 def clean_dataframe_text(df_to_clean: pd.DataFrame, text_col_name: str):
     df_to_clean[text_col_name] = df_to_clean[text_col_name].str.replace(r"\[.*?\]", "", regex=True)
     df_to_clean[text_col_name] = df_to_clean[text_col_name].str.strip()
@@ -27,6 +30,6 @@ def get_sentence_similarity(dataframe: pd.DataFrame, text_col_name: str) -> pd.D
 
 
 def extract_text_features_and_write_to_file(meeting_name: str):
-    segments_df = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_segments_final_sorted.csv", sep=';')
+    segments_df = pd.read_csv(f"{out_path}/{meeting_name}_segments_final_sorted.csv", sep=';')
     res_df = get_sentence_similarity(segments_df, "Text")
-    res_df.to_csv(f"../social-signal-processing-project/out/{meeting_name}_text_features_of_segments.csv", sep=';', index=False)
+    res_df.to_csv(f"{out_path}/{meeting_name}_text_features_of_segments.csv", sep=';', index=False)

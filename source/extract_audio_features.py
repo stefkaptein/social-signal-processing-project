@@ -7,12 +7,14 @@ import pandas as pd
 # overlapped speakerchange indicates whether the speaker of segmentA and segmentB are the same speakerchange=1 or not
 # speakerchange=0
 
+out_path = "../out"
+
 
 # loads the segments, sorts them according to starting time and saves them
 def sort_segments(path, meeting_name):
     segments = pd.read_csv(path, sep=';')
     segments_sorted = segments.sort_values(by=['StartTime'])
-    segments_sorted.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_segments_final_sorted.csv"), sep=';')
+    segments_sorted.to_csv(f"{out_path}/{meeting_name}_segments_final_sorted.csv", sep=';')
 
 
 # Input: path to sorted segments
@@ -48,10 +50,10 @@ def iterate_through_pairs(path, meeting_name):
                 'pause': pause,
                 'speakerChange': speakerChange}])]
         )
-    audio_dat.to_csv(("../social-signal-processing-project/out/" + meeting_name + "_audio_features_of_segments.csv"), sep=';')
+    audio_dat.to_csv(f"{out_path}/{meeting_name}_audio_features_of_segments.csv", sep=';')
 
 
 def extract_audio_features_and_write_to_file(meeting_name):
-    sort_segments("../social-signal-processing-project/out/" + meeting_name + "_segments_final.csv", meeting_name)
-    iterate_through_pairs("../social-signal-processing-project/out/" + meeting_name + "_segments_final_sorted.csv", meeting_name)
+    sort_segments(f"{out_path}/{meeting_name}_segments_final.csv", meeting_name)
+    iterate_through_pairs(f"{out_path}/{meeting_name}_segments_final_sorted.csv", meeting_name)
 # data.to_csv(("out\\"+meeting_name+"_audio_features_of_segments"), sep=';')
