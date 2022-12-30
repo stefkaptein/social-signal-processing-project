@@ -212,7 +212,7 @@ def read_full_transcript_topic_segments(path):
     is_new_topic = True
     for line in lines:
         curr_space = len(line) - len(line.lstrip(' '))
-        if "topic" in line and not "/topic" in line:
+        if "topic" in line and not "/topic" in line:                
 
             new_topic_id = line.split(" ")[curr_space + 1]
             new_topic_id = new_topic_id[9:len(new_topic_id) - 1]
@@ -245,6 +245,10 @@ def read_full_transcript_topic_segments(path):
                         seg[4] = True
 
     [j.pop(4) for j in all_segments]
+    for i in range(len(all_segments)):
+        if all_segments[i][2]==None:
+            all_segments[i][2] = all_segments[i+1][2]
+
     df_topic_segments = pd.DataFrame(data=all_segments,
                                      columns=['Topic_id', 'Level', 'First Segment id', 'Last Segment id'])
     return df_topic_segments

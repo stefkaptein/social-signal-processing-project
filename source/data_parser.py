@@ -5,8 +5,9 @@ import copy
 from transcript import read_full_transcript_phrase, read_full_transcript_word, read_full_transcript_segment, \
     read_full_transcript_prosody, read_full_transcript_topic_segments
 
-data_path = "../data/ICSIplus"
-out_path = "../out"
+data_path = "../social-signal-processing-project/data/ICSIplus"
+out_path = "../social-signal-processing-project/out/"
+results_path = "../social-signal-processing-project/results/"
 
 
 def get_phrases_df(meeting_name):
@@ -24,9 +25,10 @@ def get_words_df(meeting_name):
     for path in (path for path in all_files_names if meeting_name in path):
         meeting_path = (main_path + "\\" + path)
         participant = path[7]
-        words = read_full_transcript_word(meeting_path, participant)
-        if isinstance(words, pd.DataFrame):
-            df_words.append(words)
+        if participant!=".":
+            words = read_full_transcript_word(meeting_path, participant)
+            if isinstance(words, pd.DataFrame):
+                df_words.append(words)
     
     df_whole_words = pd.concat(df_words)
     df_whole_words = df_whole_words.reset_index(drop=True)
@@ -41,7 +43,8 @@ def get_prosodies(meeting_name):
     for path in (path for path in all_files_names if meeting_name in path):
         meeting_path = (main_path + "\\" + path)
         participant = path[7]
-        df_prosodies.append(read_full_transcript_prosody(meeting_path, participant))
+        if participant!=".":
+            df_prosodies.append(read_full_transcript_prosody(meeting_path, participant))
 
     df_whole_prosodies = pd.concat(df_prosodies)
     df_whole_prosodies = df_whole_prosodies.reset_index(drop=True)
@@ -56,7 +59,8 @@ def get_segments_df(meeting_name):
     for path in (path for path in all_files_names if meeting_name in path):
         meeting_path = (main_path + "\\" + path)
         participant = path[7]
-        df_segments.append(read_full_transcript_segment(meeting_path, participant))
+        if participant!=".":
+            df_segments.append(read_full_transcript_segment(meeting_path, participant))
 
     df_whole_segments = pd.concat(df_segments)
     df_whole_segments = df_whole_segments.reset_index(drop=True)
@@ -154,26 +158,49 @@ def get_topic_segments_df(meeting_name):
     df_topic_segments = read_full_transcript_topic_segments(main_path)
     return df_topic_segments
 
+def get_final_topic_segments_df(meeting_name,oui):
 
-def extract_all_data_for_meeting_and_write_to_files(meeting_name):
+    main_path = (os.path.realpath(os.path.join(os.getcwd())))
+    df_topic_segments = pd.read_csv(main_path+"\out\\"+ meeting_name + "_topic_segments.csv", sep=';')
+    if oui:
+        df_final = pd.read_csv(main_path+"\\results\\"+ meeting_name + "_final.csv", sep=';')
+    else:
+        df_final = pd.read_csv(main_path+"\\results\\"+ meeting_name + "_final.csv", sep=',')
+
+
+    for i, row in df_final.iterrows():
+        seg_id = row["segID"]
+        if seg_id not in df_topic_segments["Last Segment id"].values:
+            df_final.at[i,"boundary"] = 0
+        else:
+            print('yes')
+            df_final.at[i,"boundary"] = 1       
+
+    return df_final[["segID","boundary"]]
+
+
+def extract_all_data_for_meeting_and_write_to_files(meeting_name,oui):
     # df_phrases = get_phrases_df(meeting_name)
     # df_phrases.to_csv(("out\\"+meeting_name+"_phrases"), sep='\t')
 
     print("Parsing data for meeting: " + meeting_name)
 
-    df_words = get_words_df(meeting_name)
-    df_words.to_csv(f"{out_path}/{meeting_name}_words.csv", sep=';')
+    # df_words = get_words_df(meeting_name)
+    # df_words.to_csv(f"{out_path}/{meeting_name}_words.csv", sep=';')
 
-    df_prosodies = get_prosodies(meeting_name)
-    df_prosodies.to_csv(f"{out_path}/{meeting_name}_prosodies.csv", sep=';')
+    # df_prosodies = get_prosodies(meeting_name)
+    # df_prosodies.to_csv(f"{out_path}/{meeting_name}_prosodies.csv", sep=';')
 
-    df_segments = get_segments_df(meeting_name)
-    df_segments.to_csv(f"{out_path}/{meeting_name}_segments.csv", sep=';')
+    # df_segments = get_segments_df(meeting_name)
+    # df_segments.to_csv(f"{out_path}/{meeting_name}_segments.csv", sep=';')
 
-    df_segments_final = combine_df(meeting_name, df_words, df_segments, df_prosodies)
-    df_segments_final.to_csv(f"{out_path}/{meeting_name}_segments_final.csv", sep=';')
+    # df_segments_final = combine_df(meeting_name, df_words, df_segments, df_prosodies)
+    # df_segments_final.to_csv(f"{out_path}/{meeting_name}_segments_final.csv", sep=';')
 
-    df_topic_segments = get_topic_segments_df(meeting_name)
-    df_topic_segments.to_csv(f"{out_path}/{meeting_name}_topic_segments.csv", sep=';')
+    # df_topic_segments = get_topic_segments_df(meeting_name)
+    # df_topic_segments.to_csv(f"{out_path}/{meeting_name}_topic_segments.csv", sep=';')
+
+    df_topic_segment_with_boundary = get_final_topic_segments_df(meeting_name,oui)
+    df_topic_segment_with_boundary.to_csv(f"{results_path}/{meeting_name}_segments_boundary.csv", sep=';')
 
     print("Parsing data for meeting DONE: " + meeting_name)
