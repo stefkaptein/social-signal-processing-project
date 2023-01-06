@@ -31,7 +31,7 @@ def train_test_split(datasets, dataset_path, split = 0.4):
     #X_df = train_df[['StartTimeA','EndTimeA','StartTimeB','EndTimeB', 'f0_stds', 'pause','speakerChange', 'similarity', 'f0_diff', 'f0_baseline_diff']]
     # I think these are the 5 most useful ones
     X_train_df = train_df[['pause','speakerChange', 'similarity', 'f0_diff', 'f0_baseline_diff']]
-    Y__train_df = train_df['boundary']
+    Y_train_df = train_df['boundary']
 
     test_df = pd.DataFrame()
     for elem in list(set(datasets) - set(selected_meetings)):
@@ -48,4 +48,4 @@ def train_test_split(datasets, dataset_path, split = 0.4):
     X_test_df = test_df[['pause','speakerChange', 'similarity', 'f0_diff', 'f0_baseline_diff']]
     Y__test_df = test_df['boundary']
 
-    return X_train_df, Y__train_df, X_test_df, Y__test_df
+    return X_train_df, Y_train_df, X_test_df, Y__test_df

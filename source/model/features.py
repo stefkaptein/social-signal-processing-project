@@ -14,6 +14,5 @@ def combine_and_normalize_features(folder_path: str):
             feature_df["similarity"] = feature_df["similarity"]
             yes = 1
 
-
 if __name__ == "__main__":
     combine_and_normalize_features("../../results")
