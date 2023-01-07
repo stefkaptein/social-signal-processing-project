@@ -17,7 +17,7 @@ def get_windiff(ref: np.ndarray, pred: np.ndarray, k=3):
     ref_str = np.array2string(ref).replace(' ', '')[1: -1]
     pred_str = np.array2string(pred).replace(' ', '')[1: -1]
 
-    return nltk.metrics.segmentation.windowdiff(ref_str, pred_str, k)
+    return nltk.windowdiff(ref_str, pred_str, k)
 
 
 def get_pk(ref: np.ndarray, pred: np.ndarray, k: None):
@@ -33,7 +33,7 @@ def get_pk(ref: np.ndarray, pred: np.ndarray, k: None):
     ref_str = np.array2string(ref).replace(' ', '')[1: -1]
     pred_str = np.array2string(pred).replace(' ', '')[1: -1]
 
-    return nltk.metrics.segmentation.pk(ref_str, pred_str, k)
+    return nltk.pk(ref_str, pred_str, k)
 
 
 def get_k_kappa(ref: np.ndarray, pred: np.ndarray, k=None):
