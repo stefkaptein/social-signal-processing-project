@@ -45,10 +45,13 @@ def train_test_split(datasets, dataset_path, split = 0.4):
     # I think these are the 5 most useful ones
     X_test_df = test_df[['pause','speakerChange', 'similarity', 'f0_diff', 'f0_baseline_diff']]
     Y__test_df = test_df['boundary']
-    
+
     return X_train_df, Y_train_df, X_test_df, Y__test_df
 
-# here I split the values into batches of size "timesteps" so we can feed those batches to an LSTM
+# in general sames as above
+# however here I split the values into batches of size "timesteps" so we can feed those batches to an LSTM
+# thus the returned X_train_df has a shape of e.g. (192, timesteps, 5)
+
 def train_test_split_LSTM(datasets, dataset_path, timesteps, split = 0.4):
     num_meetings = int(len(datasets) * 0.4)
 
@@ -77,7 +80,7 @@ def train_test_split_LSTM(datasets, dataset_path, timesteps, split = 0.4):
             X_train_df = pd.concat([X_train_df,x_batch], ignore_index=True)
             Y_train_df = pd.concat([Y_train_df,y_batch], ignore_index=True)
             i += 100
-        # this implementation causes us to throw away the last values
+        # this implementation causes us to throw away the last values e.g. if we have 1567 rows and timesteps=100 we throw away the last 67
         # TODO: implement a workaround to predict all values
 
 
