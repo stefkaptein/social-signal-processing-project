@@ -3,8 +3,6 @@ import pandas as pd
 import os
 import random
 
-datasets = """Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bed016 Bed017 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021 Bmr022 Bmr024 Bmr025 Bmr026 Bmr027 Bmr029 Bns001 Bns002""".split(" ")
-results_merged_path = "./results_merged_fixedf0/"
 
 # load a the training and test data
 # Input: 
@@ -13,7 +11,7 @@ results_merged_path = "./results_merged_fixedf0/"
 #   split: percentage of samples we train on
 # Output: a train test split dataset
 def train_test_split(datasets, dataset_path, split = 0.4):
-    num_meetings = int(len(datasets) * 0.4)
+    num_meetings = int(len(datasets) * split)
 
     # Pick num_elements elements randomly
     selected_meetings = random.sample(datasets, num_meetings)

@@ -13,14 +13,16 @@ def get_windiff(ref: np.ndarray, pred: np.ndarray, k=3):
     :param ref: The target segmentation to be compared
     :param pred: Estimated segmentation to use
     :param k: The window width"""
+    ref = np.round(ref)
+
     # Due to how array2string works, I have to do remove the first and last element
-    ref_str = np.array2string(ref).replace(' ', '')[1: -1]
-    pred_str = np.array2string(pred).replace(' ', '')[1: -1]
+    ref_str = np.array2string(ref).replace('. ', '')[1: -1]
+    pred_str = np.array2string(pred).replace('. ', '')[1: -1]
 
-    return nltk.metrics.segmentation.windowdiff(ref_str, pred_str, k)
+    return nltk.segmentation.windowdiff(ref_str, pred_str, k)
 
 
-def get_pk(ref: np.ndarray, pred: np.ndarray, k: None):
+def get_pk(ref: np.ndarray, pred: np.ndarray, k= 3):
     """Method to get the Pk metric for a pair of segmentations. Uses NLTK library, and mainly focuses on
     transforming the input to work for nltk.
 
@@ -30,10 +32,12 @@ def get_pk(ref: np.ndarray, pred: np.ndarray, k: None):
     :param ref: The target segmentation to be compared
     :param pred: Estimated segmentation to use
     :param k: The window width. Because of how pk code works, value is None by default"""
+    ref = np.round(ref)
+    
     ref_str = np.array2string(ref).replace(' ', '')[1: -1]
     pred_str = np.array2string(pred).replace(' ', '')[1: -1]
 
-    return nltk.metrics.segmentation.pk(ref_str, pred_str, k)
+    return nltk.segmentation.pk(ref_str, pred_str, k)
 
 
 def get_k_kappa(ref: np.ndarray, pred: np.ndarray, k=None):
