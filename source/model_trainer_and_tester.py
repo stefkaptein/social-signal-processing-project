@@ -103,7 +103,8 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
         base_x = np.concatenate([base_x, temp_x])
         base_y = np.concatenate([base_y, temp_y])
 
-    return base_x, base_y
+    # Have to transform the X into float, because yes
+    return base_x.astype(float), base_y
 
 
 def create_3d_df(df: pd.DataFrame, shifts: list, fill_nans=True):

@@ -19,7 +19,7 @@ def get_windiff(ref: np.ndarray, pred: np.ndarray, k = None):
         # Need to estimate it manually in case it is None. Because some other pieces of code use this
         k = int(round(len(ref) / (np.count_nonzero(ref) * 2.0)))
 
-    return windowdiff(ref.tolist(), pred.tolist(), k, boundary=1)
+    return windowdiff(ref.tolist(), pred.tolist(), k, boundary=1.)
 
 
 def get_pk(ref: np.ndarray, pred: np.ndarray, k = None):
@@ -33,7 +33,7 @@ def get_pk(ref: np.ndarray, pred: np.ndarray, k = None):
     :param pred: Estimated segmentation to use
     :param k: The window width. Because of how pk code works, value is None by default"""
 
-    return pk(ref.tolist(), pred.tolist(), k, boundary=1)
+    return pk(ref.tolist(), pred.tolist(), k, boundary=1.)
 
 
 def get_k_kappa(ref: np.ndarray, pred: np.ndarray, k=None):
