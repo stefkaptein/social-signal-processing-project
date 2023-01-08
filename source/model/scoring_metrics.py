@@ -33,6 +33,10 @@ def get_pk(ref: np.ndarray, pred: np.ndarray, k = None):
     :param pred: Estimated segmentation to use
     :param k: The window width. Because of how pk code works, value is None by default"""
 
+    if k is None:
+        # Need to estimate it manually in case it is None. Because some other pieces of code use this
+        k = int(round(len(ref) / (np.count_nonzero(ref) * 2.0)))
+
     return pk(ref.tolist(), pred.tolist(), k, boundary=1)
 
 
