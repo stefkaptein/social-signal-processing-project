@@ -22,7 +22,7 @@ def get_windiff(ref: np.ndarray, pred: np.ndarray, k = None):
     return windowdiff(ref.tolist(), pred.tolist(), k, boundary=1)
 
 
-def get_pk(ref: np.ndarray, pred: np.ndarray, k: None):
+def get_pk(ref: np.ndarray, pred: np.ndarray, k = None):
     """Method to get the Pk metric for a pair of segmentations. Uses NLTK library, and mainly focuses on
     transforming the input to work for nltk.
 
@@ -51,10 +51,6 @@ def get_k_kappa(ref: np.ndarray, pred: np.ndarray, k=None):
 
     # First, getting the K values
     pk_val = get_pk(ref, pred, k)
-
-    # I need a way of getting the boolean boundary presence indicator function
-    # TODO: It should just be a check from i to k, on whether any value is 1
-    # Which does sound easy enough
 
     # Because if it's a 1 it is equal to true for numpy, using np any is a perfect replacement
     # Making this quite easy to implement!

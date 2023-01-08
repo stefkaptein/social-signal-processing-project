@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from scoring_metrics import *
+
+from model.scoring_metrics import get_pk, get_k_kappa, get_windiff
 
 # Arbitrary splits. Tries to keep some instance of all types of files in all of the splits
 train_names = """Bro026 Bro027 Bro028 Bsr001 Bns001 Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021""".split(" ")
@@ -70,7 +71,7 @@ def read_in_dataset(shifts: list = [-1], to_read = 'train'):
     else:
         dataset_list = test_names
 
-    base_df = pd.read_csv("../results_merged/" + dataset_list[0] + ".csv", sep=";")
+    base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
     # Changing the last entry in the base df, to let the system know that it is the
     # end of a topic
     # Last entry is also the boundary, which is why it's -1, -1
@@ -80,7 +81,7 @@ def read_in_dataset(shifts: list = [-1], to_read = 'train'):
 
     for i in range(1, len(dataset_list)):
         elem = dataset_list[i]
-        temp_df = pd.read_csv("../results_merged/" + elem + ".csv", sep=";")
+        temp_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
         temp_df.iloc[-1, -1] = 1.0
 
         temp_df = transform_rows(temp_df, [], shifts)
