@@ -49,6 +49,89 @@ def test_set_evaluate(model, features, shifts=[], k=None):
     return results
 
 
+def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 'train'):
+    """Selects one of the train, test, or validation dataset, reads them all in, and merges them
+    into a larger dataset. This larger dataset is then returned.
+
+    For each of the sub entries, the last boundary is marked as a 1, as it is the end of this set
+    of data, compared to the previous one.
+
+    Different than default because instead of adding information to an existing row, it adds a new
+    dimension to the dataframe, as well as getting the features in advance
+
+    :param features: the features to use in the dataset. SHOULD NOT INCLUDE BOUNDARY! That gets added
+    elsewhere
+    :param shifts: Does the relevant sentence shifts asked for. Format is same as transform rows,
+    so it's ints explaining the distance from the target sentence. IE -1 means previous one, 2 means
+    sentence 2 sentences away. Must also have the target sentence, which is assumed to be 0
+    :param to_read: dataset to read in. It's a string, containing either: 'train', 'test', 'validation'.
+    If none of these are returned,, the test dataset is returned
+
+    :returns two 3d arrays, one repreneting the the X, one representing the y"""
+
+    if to_read == 'train':
+        dataset_list = train_names
+    elif to_read == 'validation':
+        dataset_list = validation_names
+    else:
+        dataset_list = test_names
+
+    base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
+    base_y = base_df[['boundary']]
+    base_x = base_df[features]
+    base_y.iloc[-1] = 1.0
+
+    base_x = create_3d_df(base_x, shifts)
+    base_y = create_3d_df(base_y, shifts)
+
+    # First part is to modify the temp_df to be shifted and have the extra dimensions
+    # I also have to
+    # Then it's just appending it to the base_df
+    for i in range(1, len(dataset_list)):
+        elem = dataset_list[i]
+        temp_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        temp_y = temp_df[['boundary']]
+        temp_x = temp_df[features]
+        temp_y.iloc[-1] = 1.0
+
+        # Just testing that the val gets changed correctly
+        # print(temp_y.iloc[-1])
+
+        temp_x = create_3d_df(temp_x, shifts)
+        temp_y = create_3d_df(temp_y, shifts)
+
+        base_x = np.concatenate([base_x, temp_x])
+        base_y = np.concatenate([base_y, temp_y])
+
+    return base_x, base_y
+
+
+def create_3d_df(df: pd.DataFrame, shifts: list, fill_nans=True):
+    """Receives the original dataframe, and modifies it to have the dimensions as defined by
+    shifts. IE it makes it a multidimensional dataframe. Also fills in the generated nan values
+
+    Additionally, it changes nans and modifies the end target. Modifying the end target means
+    that if it is the last element of the 0th shift, the boundary gets transformed into a 1
+
+    :param dataframe: Row dataframe that contains all of the information that will be processed
+    :param shifts: Represents the surrounding sentences to take. So, -1 means it takes the previous sentence,
+    1 means it takes the next sentence, 2 means the sentence 2 steps away, etc. By default, only the previous
+    sentence is taken. Also determines the format of the dimensions of the resulting 3d dataset
+    :param fill_nans: Determines whether to fill in any nan values generated from the shifts
+    """
+    df_list = []
+    for elem in shifts:
+        shifted_df = df.shift(elem).add_suffix(str(elem))
+        if fill_nans:
+            shifted_df.fillna(0, inplace=True)
+
+        df_list.append(shifted_df)
+
+    temp = np.array(df_list)
+    # I have to rotate it to have the shape that Jan asked for
+    return np.rot90(temp)
+
+
 def read_in_dataset(shifts: list = [-1], to_read = 'train'):
     """Selects one of the train, test, or validation dataset, reads them all in, and merges them
     into a larger dataset. This larger dataset is then returned.
