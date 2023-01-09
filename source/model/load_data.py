@@ -72,14 +72,15 @@ def train_test_split_LSTM(datasets, dataset_path, timesteps, split = 0.4):
     Y_train_df = pd.DataFrame()
     for tm in train_meetings:
         i = 0
-        meeting_df = pd.DataFrame()
-        while i <= tm.shape[0]-100:
-            batch = tm.loc[i+1:i+100]
+        while i <= tm.shape[0]-timesteps:
+            batch = tm.loc[i:i+timesteps-1]
+            if batch.shape[0] != timesteps:
+                print(batch.shape[0], i, i+timesteps, tm.shape[0])
             x_batch = batch[['pause','speakerChange', 'similarity', 'f0_diff', 'f0_baseline_diff']]
             y_batch = batch['boundary']
             X_train_df = pd.concat([X_train_df,x_batch], ignore_index=True)
             Y_train_df = pd.concat([Y_train_df,y_batch], ignore_index=True)
-            i += 100
+            i += timesteps
         # this implementation causes us to throw away the last values e.g. if we have 1567 rows and timesteps=100 we throw away the last 67
         # TODO: implement a workaround to predict all values
 
@@ -99,13 +100,15 @@ def train_test_split_LSTM(datasets, dataset_path, timesteps, split = 0.4):
 
     for tm in test_meetings:
         i = 0
-        meeting_df = pd.DataFrame()
-        while i <= tm.shape[0]-100:
-            batch = tm.loc[i+1:i+100]
+        while i <= tm.shape[0]-timesteps:
+            batch = tm.loc[i:i+timesteps-1]
+            if batch.shape[0] != timesteps:
+                st = batch.shape[0]
+                print(batch.shape[0], i, i+timesteps, tm.shape[0])
             x_batch = batch[['pause','speakerChange', 'similarity', 'f0_diff', 'f0_baseline_diff']]
             y_batch = batch['boundary']
             X_test_df = pd.concat([X_test_df,x_batch], ignore_index=True)
             Y_test_df = pd.concat([Y_test_df,y_batch], ignore_index=True)
-            i += 100
+            i += timesteps
 
     return X_train_df, Y_train_df, X_test_df, Y_test_df
