@@ -10,14 +10,14 @@ import random
 #   path: path where datasets are stored
 #   split: percentage of samples we train on
 # Output: a train test split dataset
-def train_test_split(datasets, dataset_path, split = 0.4):
-    num_meetings = int(len(datasets) * split)
+def train_test_split(datasets, dataset_path, test_split = 0.4):
+    train_num_meetings = int(len(datasets) * (1-test_split))
 
     # Pick num_elements elements randomly
-    selected_meetings = random.sample(datasets, num_meetings)
+    train_selected_meetings = random.sample(datasets, train_num_meetings)
 
     train_df = pd.DataFrame()
-    for elem in selected_meetings:
+    for elem in train_selected_meetings:
         path = (os.path.realpath(os.path.join(os.getcwd(), (f"{dataset_path}"+ elem + ".csv"))))
         df = pd.read_csv(path, sep=';')
         train_df = pd.concat([train_df,df], ignore_index=True)
@@ -32,10 +32,10 @@ def train_test_split(datasets, dataset_path, split = 0.4):
     Y_train_df = train_df['boundary']
 
     test_df = pd.DataFrame()
-    for elem in list(set(datasets) - set(selected_meetings)):
+    for elem in list(set(datasets) - set(train_selected_meetings)):
         path = (os.path.realpath(os.path.join(os.getcwd(), (f"{dataset_path}"+ elem + ".csv"))))
         df = pd.read_csv(path, sep=';')
-        test_df = pd.concat([train_df,df], ignore_index=True)
+        test_df = pd.concat([test_df,df], ignore_index=True)
 
     test_df['speakerChange'] = test_df["speakerChange"].astype(float)
     test_df['boundary'] = test_df["boundary"].astype(float)
