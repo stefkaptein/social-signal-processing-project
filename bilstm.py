@@ -48,9 +48,9 @@ history=model.fit(X_train, Y_train,
 predictions = model(X_test).numpy()
 
 #TODO: some weird error appears here
-windiff = get_windiff(Y_test, predictions)
-pk = get_pk(Y_test, predictions, k=58)
-k_k = get_k_kappa(Y_test, predictions)
+windiff = get_windiff(Y_test.flatten(), predictions.flatten())
+pk = get_pk(Y_test.flatten(), predictions.flatten(), k=58)
+k_k = get_k_kappa(Y_test.flatten(), predictions.flatten())
 print("windiff:", windiff)
 print("pk:", pk)
 print("K_k ", k_k)

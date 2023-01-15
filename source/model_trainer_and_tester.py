@@ -4,9 +4,10 @@ import numpy as np
 from model.scoring_metrics import get_pk, get_k_kappa, get_windiff
 
 # Arbitrary splits. Tries to keep some instance of all types of files in all of the splits
-train_names = """Bro026 Bro027 Bro028 Bsr001 Bns001 Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021""".split(" ")
-test_names = """Bro025 Btr001 Bns002 Bed017 Bmr024 Bmr025 Bmr026 Bmr027 Bmr029""".split(" ")
-validation_names = """Bmr022 Bns003 Bed016 Bro003 Bro004 Bro005 Bro007 Bro008 Bro010 Bro011 Bro012 Bro013 Bro014 Bro015 Bro016 Bro017 Bro018 Bro019 Bro021 Bro022 Bro023 Bro024 Btr002""".split(" ")
+train_names = """Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bed016 Bed017 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021 Bmr022 Bmr024 Bmr025 Bmr026 Bmr027 Bmr029""".split(" ")
+test_names = """Bns001 Bns002 Bns003 Bro003 Bro004 Bro005 Bro007 Bro008 Bro010 Bro011 Bro012 Bro013 Bro014 Bro015 Bro016 Bro017 Bro018 Bro019 Bro021 Bro022 Bro023 Bro024 Bro025 Bro026 Bro027 Bro028 Bsr001 Btr001 Btr002""".split(" ")
+# Test and validation are the same for now... because yes
+validation_names = """Bns001 Bns002 Bns003 Bro003 Bro004 Bro005 Bro007 Bro008 Bro010 Bro011 Bro012 Bro013 Bro014 Bro015 Bro016 Bro017 Bro018 Bro019 Bro021 Bro022 Bro023 Bro024 Bro025 Bro026 Bro027 Bro028 Bsr001 Btr001 Btr002""".split(" ")
 
 
 def test_set_evaluate(model, features, shifts=[], k=None):
@@ -49,6 +50,59 @@ def test_set_evaluate(model, features, shifts=[], k=None):
     return results
 
 
+def test_set_evaluate_multiple(model, features, shifts=[], k=None):
+    """Input to test trained model for topic segmentation. Returns the results as a dictionary with the pk, windiff,
+    and k-kappa results for each of the conversations in the test set.
+
+    Uses the test set for evaluation, not the valiation set!
+
+    :param model: Model to test. Must have a .predict(X) method for it to work properly. This method
+    Should not predict probabilities, but give the actual estimated value
+    This method assumes that any fusion has already been done and as such isn't needed
+    :param features: Features model was trained on. They're consistent across all datasets used.
+    Method assumes that boundary is not included in the list of features, as it's always the target feature
+    :param shifts: List containing the nearby sentences that are used. IE [-1, 1] would use the previous
+    and the next sentence. Used to transform the input in case it is required. Sentence shifts the model
+    used. Important to guarantee consistency
+    :param k: Value used for the scoring metrics. In case None, a default is calculated for each of the
+    relevant metrics.
+    :returns Dictionary containing the three relevant tested metrics"""
+    # First step is reading in dataset
+
+    # Given there's no clear boundary split, I'll just be lazy and manually modify the boundary at the
+    # end of the dataset to be a 1, as this is the end of a topic. Then concatenate everything.
+    # I've seen no explanation on how else to do it, and it seems valid enough.
+    dataset_list = test_names
+
+    # base_df = read_in_dataset(shifts, 'test')
+    base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
+    base_df = transform_rows(base_df, features, shifts)
+
+    pk_values = []
+    k_k_values = []
+    windiff_values = []
+
+    for elem in dataset_list:
+        base_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        base_df = transform_rows(base_df, features, shifts)
+        y = base_df['boundary'].to_numpy()
+        X = base_df[features]
+
+        # TODO: This should be a nicer way of filling in the nans, depending on the column type.
+        #  But for now, this is a good enough starting point
+        X.fillna(0, inplace=True)
+
+        hyp_y = model.predict(X)
+
+        pk_values.append(get_pk(y, hyp_y, k))
+        k_k_values.append(get_k_kappa(y, hyp_y, k))
+        windiff_values.append(get_windiff(y, hyp_y, k))
+
+    results_data = {'Pk': pk_values, 'K-k': k_k_values, 'Windiff': windiff_values}
+
+    return pd.DataFrame(results_data)
+
+
 def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 'train'):
     """Selects one of the train, test, or validation dataset, reads them all in, and merges them
     into a larger dataset. This larger dataset is then returned.
@@ -79,7 +133,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
     base_y = base_df[['boundary']]
     base_x = base_df[features]
-    base_y.iloc[-1] = 1.0
+    # base_y.iloc[-1] = 1.0
 
     base_x = create_3d_df(base_x, shifts)
     base_y = create_3d_df(base_y, shifts)
@@ -92,7 +146,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
         temp_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
         temp_y = temp_df[['boundary']]
         temp_x = temp_df[features]
-        temp_y.iloc[-1] = 1.0
+        # temp_y.iloc[-1] = 1.0
 
         # Just testing that the val gets changed correctly
         # print(temp_y.iloc[-1])
