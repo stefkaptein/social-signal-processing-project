@@ -8,3 +8,5 @@ source/__pycache__/
 .DS_Store
 
 out/
+
+source/model/__pycache__/

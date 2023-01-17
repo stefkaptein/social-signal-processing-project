@@ -74,10 +74,6 @@ def test_set_evaluate_multiple(model, features, shifts=[], k=None):
     # I've seen no explanation on how else to do it, and it seems valid enough.
     dataset_list = test_names
 
-    # base_df = read_in_dataset(shifts, 'test')
-    base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
-    base_df = transform_rows(base_df, features, shifts)
-
     pk_values = []
     k_k_values = []
     windiff_values = []
@@ -103,6 +99,47 @@ def test_set_evaluate_multiple(model, features, shifts=[], k=None):
     return pd.DataFrame(results_data)
 
 
+def test_set_evaluate_multiple_lstm(model, features, shifts=[0], threshold=0.5, k=None):
+    dataset_list = test_names
+
+    pk_values = []
+    k_k_values = []
+    windiff_values = []
+
+    # When doing predictions, we only take where shift = 0. This find the location in y, for later use
+    target_col = shifts.index(0)
+
+    for elem in dataset_list:
+        base_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        y = base_df['boundary']
+        X = base_df[features]
+
+        y = create_3d_df(y, shifts)
+        X = create_3d_df(X, shifts)
+
+        # TODO: This should be a nicer way of filling in the nans, depending on the column type.
+        #  But for now, this is a good enough starting point
+        # X.fillna(0, inplace=True)
+        X = np.asarray(X).astype('float32')
+
+        hyp_y = model.predict(X)
+
+        # Now, I need to only take the 0th value, as well as round the parameters...
+        hyp_y = hyp_y[:, target_col]
+        # Rounding according to a threshold, as well as flattening because of silly numpy stuff
+        hyp_y = (hyp_y > threshold).flatten()
+
+        flattened_y = y[:, target_col].flatten()
+
+        pk_values.append(get_pk(flattened_y, hyp_y, k))
+        k_k_values.append(get_k_kappa(flattened_y, hyp_y, k))
+        windiff_values.append(get_windiff(flattened_y, hyp_y, k))
+
+    results_data = {'Pk': pk_values, 'K-k': k_k_values, 'Windiff': windiff_values}
+
+    return pd.DataFrame(results_data)
+
+
 def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 'train'):
     """Selects one of the train, test, or validation dataset, reads them all in, and merges them
     into a larger dataset. This larger dataset is then returned.
@@ -121,7 +158,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     :param to_read: dataset to read in. It's a string, containing either: 'train', 'test', 'validation'.
     If none of these are returned,, the test dataset is returned
 
-    :returns two 3d arrays, one repreneting the the X, one representing the y"""
+    :returns two 3d arrays, one repreneting the X, one representing the y"""
 
     if to_read == 'train':
         dataset_list = train_names
