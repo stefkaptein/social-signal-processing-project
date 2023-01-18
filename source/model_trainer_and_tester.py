@@ -50,7 +50,7 @@ def test_set_evaluate(model, features, shifts=[], k=None):
     return results
 
 
-def test_set_evaluate_multiple(model, features, shifts=[], k=None):
+def test_set_evaluate_multiple(model, features: list, shifts: list =[], k=None):
     """Input to test trained model for topic segmentation. Returns the results as a dictionary with the pk, windiff,
     and k-kappa results for each of the conversations in the test set.
 
@@ -81,8 +81,8 @@ def test_set_evaluate_multiple(model, features, shifts=[], k=None):
     for elem in dataset_list:
         base_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
         base_df = transform_rows(base_df, features, shifts)
-        y = base_df['boundary'].to_numpy()
-        X = base_df[features]
+        y = base_df[['boundary']].to_numpy()
+        X = base_df.drop(['boundary'], axis=1)
 
         # TODO: This should be a nicer way of filling in the nans, depending on the column type.
         #  But for now, this is a good enough starting point
@@ -224,7 +224,7 @@ def create_3d_df(df: pd.DataFrame, shifts: list, fill_nans=True):
     return np.rot90(temp)
 
 
-def read_in_dataset(shifts: list = [-1], to_read = 'train'):
+def read_in_dataset(features: list, shifts: list = [-1], to_read = 'train'):
     """Selects one of the train, test, or validation dataset, reads them all in, and merges them
     into a larger dataset. This larger dataset is then returned.
 
@@ -250,20 +250,25 @@ def read_in_dataset(shifts: list = [-1], to_read = 'train'):
     # Changing the last entry in the base df, to let the system know that it is the
     # end of a topic
     # Last entry is also the boundary, which is why it's -1, -1
-    base_df.iloc[-1, -1] = 1.0
 
-    base_df = transform_rows(base_df, [], shifts)
+    base_df = transform_rows(base_df, features, shifts)
+
+    base_y = base_df[['boundary']]
+    base_df = base_df.drop(['boundary'], axis=1)
 
     for i in range(1, len(dataset_list)):
         elem = dataset_list[i]
         temp_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
-        temp_df.iloc[-1, -1] = 1.0
 
-        temp_df = transform_rows(temp_df, [], shifts)
+        temp_df = transform_rows(temp_df, features, shifts)
+
+        temp_y = temp_df[['boundary']]
+        temp_df = temp_df.drop(['boundary'], axis=1)
 
         base_df = pd.concat([base_df, temp_df], ignore_index=True)
+        base_y = pd.concat([base_y, temp_y], ignore_index=True)
 
-    return base_df
+    return base_df, base_y
 
 
 def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1]):
@@ -295,6 +300,8 @@ def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1])
         filtered_df = dataframe[features]
 
     temp_df = filtered_df.add_suffix('0')
+    # Doing a filter on nans, just in case
+    temp_df = handle_nas(temp_df)
 
     # This loop does the shifts, as well as filling in the relevant empty values
     for elem in shifts:
