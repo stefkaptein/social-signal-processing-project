@@ -3,6 +3,28 @@ import pandas as pd
 import os
 import random
 
+def filter_lvl(df,highest_lvl):
+    df['boundary1']=None
+
+    curr_lvl=df.at[0,'Level']
+    for i, row_i in df.iterrows():
+        lvl = row_i['Level']
+
+        df.at[i,'boundary1']=0
+
+        if lvl>curr_lvl and curr_lvl<highest_lvl:
+            df.at[i-1,'boundary1']=1
+            curr_lvl=lvl
+        
+        if lvl<curr_lvl and curr_lvl<highest_lvl:
+            df.at[i-1,'boundary1']=1
+            curr_lvl=lvl
+
+    
+    print(df['boundary1'].unique())
+
+    return df
+
 
 # load a the training and test data
 # Input: 
@@ -10,7 +32,7 @@ import random
 #   path: path where datasets are stored
 #   split: percentage of samples we train on
 # Output: a train test split dataset
-def train_test_split(datasets, dataset_path, test_split = 0.4):
+def train_test_split(datasets, dataset_path,lvl=None, test_split = 0.4):
     train_num_meetings = int(len(datasets) * (1-test_split))
 
     # Pick num_elements elements randomly
@@ -20,6 +42,8 @@ def train_test_split(datasets, dataset_path, test_split = 0.4):
     for elem in train_selected_meetings:
         path = (os.path.realpath(os.path.join(os.getcwd(), (f"{dataset_path}"+ elem + ".csv"))))
         df = pd.read_csv(path, sep=';')
+        if lvl!=None:
+            df = filter_lvl(df,lvl)
         train_df = pd.concat([train_df,df], ignore_index=True)
 
     train_df['speakerChange'] = train_df["speakerChange"].astype(float)
@@ -35,6 +59,8 @@ def train_test_split(datasets, dataset_path, test_split = 0.4):
     for elem in list(set(datasets) - set(train_selected_meetings)):
         path = (os.path.realpath(os.path.join(os.getcwd(), (f"{dataset_path}"+ elem + ".csv"))))
         df = pd.read_csv(path, sep=';')
+        if lvl!=None:
+            df = filter_lvl(df,lvl)        
         test_df = pd.concat([test_df,df], ignore_index=True)
 
     test_df['speakerChange'] = test_df["speakerChange"].astype(float)
