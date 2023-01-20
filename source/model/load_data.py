@@ -32,7 +32,7 @@ def filter_lvl(df,highest_lvl):
 #   path: path where datasets are stored
 #   split: percentage of samples we train on
 # Output: a train test split dataset
-def train_test_split(datasets, dataset_path,lvl=None, test_split = 0.4):
+def train_test_split(datasets, dataset_path, test_split = 0.4):
     train_num_meetings = int(len(datasets) * (1-test_split))
 
     # Pick num_elements elements randomly
@@ -42,8 +42,6 @@ def train_test_split(datasets, dataset_path,lvl=None, test_split = 0.4):
     for elem in train_selected_meetings:
         path = (os.path.realpath(os.path.join(os.getcwd(), (f"{dataset_path}"+ elem + ".csv"))))
         df = pd.read_csv(path, sep=';')
-        if lvl!=None:
-            df = filter_lvl(df,lvl)
         train_df = pd.concat([train_df,df], ignore_index=True)
 
     train_df['speakerChange'] = train_df["speakerChange"].astype(float)
@@ -58,9 +56,7 @@ def train_test_split(datasets, dataset_path,lvl=None, test_split = 0.4):
     test_df = pd.DataFrame()
     for elem in list(set(datasets) - set(train_selected_meetings)):
         path = (os.path.realpath(os.path.join(os.getcwd(), (f"{dataset_path}"+ elem + ".csv"))))
-        df = pd.read_csv(path, sep=';')
-        if lvl!=None:
-            df = filter_lvl(df,lvl)        
+        df = pd.read_csv(path, sep=';')       
         test_df = pd.concat([test_df,df], ignore_index=True)
 
     test_df['speakerChange'] = test_df["speakerChange"].astype(float)
