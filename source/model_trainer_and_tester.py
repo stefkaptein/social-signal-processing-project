@@ -79,7 +79,7 @@ def test_set_evaluate_multiple(model, features: list, shifts: list =[], k=None):
     windiff_values = []
 
     for elem in dataset_list:
-        base_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        base_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
         base_df = transform_rows(base_df, features, shifts)
         y = base_df[['boundary']].to_numpy()
         X = base_df.drop(['boundary'], axis=1)
@@ -110,7 +110,7 @@ def test_set_evaluate_multiple_lstm(model, features, shifts=[0], threshold=0.5, 
     target_col = shifts.index(0)
 
     for elem in dataset_list:
-        base_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        base_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
         y = base_df['boundary']
         X = base_df[features]
 
@@ -167,7 +167,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     else:
         dataset_list = test_names
 
-    base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
+    base_df = pd.read_csv("../results_merged_f0_stds_fixed/" + dataset_list[0] + ".csv", sep=";")
     base_y = base_df[['boundary']]
     base_x = base_df[features]
     # base_y.iloc[-1] = 1.0
@@ -180,7 +180,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     # Then it's just appending it to the base_df
     for i in range(1, len(dataset_list)):
         elem = dataset_list[i]
-        temp_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
         temp_y = temp_df[['boundary']]
         temp_x = temp_df[features]
         # temp_y.iloc[-1] = 1.0
@@ -246,7 +246,7 @@ def read_in_dataset(features: list, shifts: list = [-1], to_read = 'train'):
     else:
         dataset_list = test_names
 
-    base_df = pd.read_csv("../results_merged_fixedf0/" + dataset_list[0] + ".csv", sep=";")
+    base_df = pd.read_csv("../results_merged_f0_stds_fixed/" + dataset_list[0] + ".csv", sep=";")
     # Changing the last entry in the base df, to let the system know that it is the
     # end of a topic
     # Last entry is also the boundary, which is why it's -1, -1
@@ -258,7 +258,7 @@ def read_in_dataset(features: list, shifts: list = [-1], to_read = 'train'):
 
     for i in range(1, len(dataset_list)):
         elem = dataset_list[i]
-        temp_df = pd.read_csv("../results_merged_fixedf0/" + elem + ".csv", sep=";")
+        temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
 
         temp_df = transform_rows(temp_df, features, shifts)
 
