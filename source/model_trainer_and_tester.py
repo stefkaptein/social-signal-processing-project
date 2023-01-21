@@ -290,7 +290,7 @@ def read_in_dataset(features: list, shifts: list = [-1], to_read = 'train'):
     return base_df, base_y
 
 
-def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split = 0.3):
+def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split = 0.3,subtopic_lvl=1):
     """Selects one of the train, test, or validation dataset, reads them all in, and merges them
     into a larger dataset. This larger dataset is then returned.
 
@@ -314,47 +314,64 @@ def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split
     test_selected_meetings = list(set(dataset_list) - set(train_selected_meetings))
 
     base_df_train = pd.read_csv("../results_merged_f0_stds_fixed/" + train_selected_meetings[0] + ".csv", sep=";")
+    segment_boundaries_train = pd.read_csv("../topic_boundaries/" + train_selected_meetings[0] + "_topic_boundaries_lvl_"+str(subtopic_lvl)+".csv",sep=",")
+
+    base_y_train = []
+    for segId in base_df_train['segID']:
+        if segId in segment_boundaries_train['start_segment_id'].values:
+            base_y_train.append(1)
+        else:
+            base_y_train.append(0)
+    base_df_train = base_df_train[features]
 
     base_df_train = transform_rows(base_df_train, features, shifts)
-
-    base_y_train = base_df_train[['boundary']]
-    base_df_train = base_df_train.drop(['boundary'], axis=1)
 
     for i in range(1, len(train_selected_meetings)):
         elem = train_selected_meetings[i]
         temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
+        segment_boundaries = pd.read_csv("../topic_boundaries/" + elem + "_topic_boundaries_lvl_"+str(subtopic_lvl)+".csv",sep=",")
+        base_y = []
+        for segId in temp_df['segID']:
+            if segId in segment_boundaries['start_segment_id'].values:
+                base_y.append(1)
+            else:
+                base_y.append(0)
 
         temp_df = transform_rows(temp_df, features, shifts)
 
-        temp_y = temp_df[['boundary']]
-        temp_df = temp_df.drop(['boundary'], axis=1)
-
         base_df_train = pd.concat([base_df_train, temp_df], ignore_index=True)
-        base_y_train = pd.concat([base_y_train, temp_y], ignore_index=True)
+        base_y_train = base_y_train + base_y
+
 
     base_df_test = pd.read_csv("../results_merged_f0_stds_fixed/" + test_selected_meetings[0] + ".csv", sep=";")
+    segment_boundaries_test = pd.read_csv("../topic_boundaries/" + test_selected_meetings[0] + "_topic_boundaries_lvl_"+str(subtopic_lvl)+".csv",sep=",")
+    
+    base_y_test = []
+    for segId in base_df_test['segID']:
+        if segId in segment_boundaries_test['start_segment_id'].values:
+            base_y_test.append(1)
+        else:
+            base_y_test.append(0)
+    base_df_test = base_df_test[features]
 
     base_df_test = transform_rows(base_df_test, features, shifts)
-
-    base_y_test = base_df_test[['boundary']]
-    base_df_test = base_df_test.drop(['boundary'], axis=1)
 
     for i in range(1, len(test_selected_meetings)):
         elem = test_selected_meetings[i]
         temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
-
+        segment_boundaries = pd.read_csv("../topic_boundaries/" + elem + "_topic_boundaries_lvl_"+str(subtopic_lvl)+".csv",sep=",")
+        base_y = []
+        for segId in temp_df['segID']:
+            if segId in segment_boundaries['start_segment_id'].values:
+                base_y.append(1)
+            else:
+                base_y.append(0)
         temp_df = transform_rows(temp_df, features, shifts)
 
-        temp_y = temp_df[['boundary']]
-        temp_df = temp_df.drop(['boundary'], axis=1)
-
         base_df_test = pd.concat([base_df_test, temp_df], ignore_index=True)
-        base_y_test = pd.concat([base_y_test, temp_y], ignore_index=True)
+        base_y_test = base_y_test + base_y
 
-    base_y_test = base_y_test['boundary'].tolist()
-    base_y_train = base_y_train['boundary'].tolist()
-
-    return base_df_train, base_y_train, base_df_test, base_y_test
+    return base_df_train, list(base_y_train), base_df_test, list(base_y_test)
 
 
 def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1]):
@@ -401,8 +418,6 @@ def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1])
         temp_df = pd.concat([temp_df, shifted_df], axis=1)
 
     temp_df = temp_df.copy()
-    temp_df['boundary'] = dataframe['boundary']
-
     return temp_df
 
 
