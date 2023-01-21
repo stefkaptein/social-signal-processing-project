@@ -8,17 +8,17 @@ from text_features import extract_text_features_and_write_to_file
 
 
 def create_feature_vector(meeting_name: str) -> pd.DataFrame:
-    text_features = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_text_features_of_segments.csv", sep=';')
-    audio_features = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_audio_features_of_segments.csv", sep=';')
+    text_features = pd.read_csv(f"../out/{meeting_name}_text_features_of_segments.csv", sep=';')
+    audio_features = pd.read_csv(f"../out/{meeting_name}_audio_features_of_segments.csv", sep=';')
     final_df = audio_features.merge(text_features, left_on='segID', right_on='id', how='inner')
-    final_df.to_csv(f"../social-signal-processing-project/results/{meeting_name}_final.csv", sep=';', index=False)
+    final_df.to_csv(f"../results/{meeting_name}_final.csv", sep=';', index=False)
     return final_df
 
 
 def add_lvl_info(meeting_name):
-    boundaries_df = pd.read_csv(f"../social-signal-processing-project/out/{meeting_name}_topic_segments.csv", sep=';')
-    final_df = pd.read_csv(f"../social-signal-processing-project/results_merged_fixedf0/{meeting_name}.csv", sep=';')
-    final_df['Level']=None
+    boundaries_df = pd.read_csv(f"../out/{meeting_name}_topic_segments.csv", sep=';')
+    final_df = pd.read_csv(f"../results_merged_fixedf0/{meeting_name}.csv", sep=';')
+    final_df['Level'] = None
 
     for i, row_i in final_df.iterrows():
         id = int((row_i['segID'][15:]).replace(",",""))
@@ -29,7 +29,8 @@ def add_lvl_info(meeting_name):
                 new_lvl = int(row_j['Level'])
             final_df.at[i,'Level'] = new_lvl
 
-    final_df.to_csv(f"../social-signal-processing-project/results_merged_fixedfo_lvl/{meeting_name}.csv", sep=';', index=False)
+    final_df.to_csv(f"../results_merged_fixedfo_lvl/{meeting_name}.csv", sep=';', index=False)
+
 
 if __name__ == "__main__":
     oui = True
