@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import random
 
-from model.scoring_metrics import get_pk, get_k_kappa, get_windiff
+from source.model.scoring_metrics import get_pk, get_k_kappa, get_windiff
 
 # Arbitrary splits. Tries to keep some instance of all types of files in all of the splits
 train_names = """Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bed016 Bed017 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021 Bmr022 Bmr024 Bmr025 Bmr026 Bmr027 Bmr029""".split(" ")
@@ -101,7 +101,8 @@ def test_set_evaluate_multiple(model, features: list, shifts: list =[], k=None):
     return pd.DataFrame(results_data)
 
 
-def test_set_evaluate_multiple_lstm(model, features, shifts=[0], threshold=0.5, k=None):
+def test_set_evaluate_multiple_lstm(model, features, shifts=[0], threshold=0.5, k=None,
+                                    location = "../results_merged_f0_stds_fixed/"):
     dataset_list = test_names
 
     pk_values = []
@@ -112,7 +113,7 @@ def test_set_evaluate_multiple_lstm(model, features, shifts=[0], threshold=0.5, 
     target_col = shifts.index(0)
 
     for elem in dataset_list:
-        base_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
+        base_df = pd.read_csv(location + elem + ".csv", sep=";")
         y = base_df['boundary']
         X = base_df[features]
 
@@ -142,7 +143,8 @@ def test_set_evaluate_multiple_lstm(model, features, shifts=[0], threshold=0.5, 
     return pd.DataFrame(results_data)
 
 
-def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 'train'):
+def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 'train',
+                         location = "../results_merged_f0_stds_fixed/"):
     """Selects one of the train, test, or validation dataset, reads them all in, and merges them
     into a larger dataset. This larger dataset is then returned.
 
@@ -169,7 +171,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     else:
         dataset_list = test_names
 
-    base_df = pd.read_csv("../results_merged_f0_stds_fixed/" + dataset_list[0] + ".csv", sep=";")
+    base_df = pd.read_csv(location + dataset_list[0] + ".csv", sep=";")
     base_y = base_df[['boundary']]
     base_x = base_df[features]
     # base_y.iloc[-1] = 1.0
@@ -182,7 +184,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     # Then it's just appending it to the base_df
     for i in range(1, len(dataset_list)):
         elem = dataset_list[i]
-        temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
+        temp_df = pd.read_csv(location + elem + ".csv", sep=";")
         temp_y = temp_df[['boundary']]
         temp_x = temp_df[features]
         # temp_y.iloc[-1] = 1.0
