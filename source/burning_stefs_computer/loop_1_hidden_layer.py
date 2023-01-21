@@ -53,7 +53,6 @@ for hidden_units in range(16, 513, 31):
     # closely
     model.add(TimeDistributed(Dense(1, activation='sigmoid')))
 
-    import tensorflow_addons as tfa
     model.compile(loss='binary_crossentropy', optimizer='RMSprop',
                   metrics=[keras.metrics.Precision(name='precision'), tf.keras.metrics.Recall(name='recall')],
                   weighted_metrics=[]

@@ -172,12 +172,19 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
         dataset_list = test_names
 
     base_df = pd.read_csv(location + dataset_list[0] + ".csv", sep=";")
-    base_y = base_df[['boundary']]
+    segment_boundaries = pd.read_csv("../../topic_boundaries/" + dataset_list[0] + "_topic_boundaries_lvl_1.csv",
+                                     sep=",")
+    base_y = []
+    for segId in base_df['segID']:
+        if segId in segment_boundaries['start_segment_id']:
+            base_y.append(1)
+        else:
+            base_y.append(0)
     base_x = base_df[features]
     # base_y.iloc[-1] = 1.0
 
     base_x = create_3d_df(base_x, shifts)
-    base_y = create_3d_df(base_y, shifts)
+    base_y = create_3d_df(pd.DataFrame(base_y), shifts)
 
     # First part is to modify the temp_df to be shifted and have the extra dimensions
     # I also have to
@@ -185,7 +192,15 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
     for i in range(1, len(dataset_list)):
         elem = dataset_list[i]
         temp_df = pd.read_csv(location + elem + ".csv", sep=";")
-        temp_y = temp_df[['boundary']]
+        segment_boundaries = pd.read_csv("../../topic_boundaries/" + elem + "_topic_boundaries_lvl_1.csv",
+                                         sep=",")
+        temp_y = []
+        for segId in temp_df['segID']:
+            if segId in segment_boundaries['start_segment_id']:
+                temp_y.append(1)
+            else:
+                temp_y.append(0)
+
         temp_x = temp_df[features]
         # temp_y.iloc[-1] = 1.0
 
@@ -193,7 +208,7 @@ def read_in_dataset_lstm(features: list, shifts: list = [-1, 0, 1], to_read = 't
         # print(temp_y.iloc[-1])
 
         temp_x = create_3d_df(temp_x, shifts)
-        temp_y = create_3d_df(temp_y, shifts)
+        temp_y = create_3d_df(pd.DataFrame(temp_y), shifts)
 
         base_x = np.concatenate([base_x, temp_x])
         base_y = np.concatenate([base_y, temp_y])
