@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import random
 
 from model.scoring_metrics import get_pk, get_k_kappa, get_windiff
 
@@ -9,6 +10,7 @@ test_names = """Bns001 Bns002 Bns003 Bro003 Bro004 Bro005 Bro007 Bro008 Bro010 B
 # Test and validation are the same for now... because yes
 validation_names = """Bns001 Bns002 Bns003 Bro003 Bro004 Bro005 Bro007 Bro008 Bro010 Bro011 Bro012 Bro013 Bro014 Bro015 Bro016 Bro017 Bro018 Bro019 Bro021 Bro022 Bro023 Bro024 Bro025 Bro026 Bro027 Bro028 Bsr001 Btr001 Btr002""".split(" ")
 
+all_names = """Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bed016 Bed017 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021 Bmr022 Bmr024 Bmr025 Bmr026 Bmr027 Bmr029 Bns001 Bns002 Bns003 Bro003 Bro004 Bro005 Bro007 Bro008 Bro010 Bro011 Bro012 Bro013 Bro014 Bro015 Bro016 Bro017 Bro018 Bro019 Bro021 Bro022 Bro023 Bro024 Bro025 Bro026 Bro027 Bro028 Bsr001 Btr001 Btr002""".split(" ")
 
 def test_set_evaluate(model, features, shifts=[], k=None):
     """Input to test trained model for topic segmentation. Returns the results as a dictionary with the pk, windiff,
@@ -269,6 +271,70 @@ def read_in_dataset(features: list, shifts: list = [-1], to_read = 'train'):
         base_y = pd.concat([base_y, temp_y], ignore_index=True)
 
     return base_df, base_y
+
+
+def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split = 0.3):
+    """Selects one of the train, test, or validation dataset, reads them all in, and merges them
+    into a larger dataset. This larger dataset is then returned.
+
+    For each of the sub entries, the last boundary is marked as a 1, as it is the end of this set
+    of data, compared to the previous one.
+
+    :param features: Features to be used. Should in
+    :param shifts: Does the relevant sentence shifts asked for. Format is same as transform rows,
+    so it's ints explaining the distance from the target sentence. IE -1 means previous one, 2 means
+    sentence 2 sentences away.
+
+    :returns The relevant combination of the datasets
+    """
+    dataset_list = all_names
+
+    if 'boundary' not in features:
+        features.append('boundary')
+
+    train_num_meetings = int(len(dataset_list) * (1-test_split))
+    train_selected_meetings = random.sample(dataset_list, train_num_meetings)
+    test_selected_meetings = list(set(dataset_list) - set(train_selected_meetings))
+
+    base_df_train = pd.read_csv("../results_merged_f0_stds_fixed/" + train_selected_meetings[0] + ".csv", sep=";")
+
+    base_df_train = transform_rows(base_df_train, features, shifts)
+
+    base_y_train = base_df_train[['boundary']]
+    base_df_train = base_df_train.drop(['boundary'], axis=1)
+
+    for i in range(1, len(train_selected_meetings)):
+        elem = train_selected_meetings[i]
+        temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
+
+        temp_df = transform_rows(temp_df, features, shifts)
+
+        temp_y = temp_df[['boundary']]
+        temp_df = temp_df.drop(['boundary'], axis=1)
+
+        base_df_train = pd.concat([base_df_train, temp_df], ignore_index=True)
+        base_y_train = pd.concat([base_y_train, temp_y], ignore_index=True)
+
+    base_df_test = pd.read_csv("../results_merged_f0_stds_fixed/" + test_selected_meetings[0] + ".csv", sep=";")
+
+    base_df_test = transform_rows(base_df_test, features, shifts)
+
+    base_y_test = base_df_test[['boundary']]
+    base_df_test = base_df_test.drop(['boundary'], axis=1)
+
+    for i in range(1, len(test_selected_meetings)):
+        elem = test_selected_meetings[i]
+        temp_df = pd.read_csv("../results_merged_f0_stds_fixed/" + elem + ".csv", sep=";")
+
+        temp_df = transform_rows(temp_df, features, shifts)
+
+        temp_y = temp_df[['boundary']]
+        temp_df = temp_df.drop(['boundary'], axis=1)
+
+        base_df_test = pd.concat([base_df_test, temp_df], ignore_index=True)
+        base_y_test = pd.concat([base_y_test, temp_y], ignore_index=True)
+
+    return base_df_train, base_y_train, base_df_test, base_y_test
 
 
 def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1]):
