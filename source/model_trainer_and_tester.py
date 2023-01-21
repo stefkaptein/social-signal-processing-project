@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import random
 
-from source.model.scoring_metrics import get_pk, get_k_kappa, get_windiff
+from model.scoring_metrics import get_pk, get_k_kappa, get_windiff
 
 # Arbitrary splits. Tries to keep some instance of all types of files in all of the splits
 train_names = """Bed002 Bed003 Bed004 Bed005 Bed006 Bed008 Bed009 Bed010 Bed011 Bed012 Bed013 Bed014 Bed015 Bed016 Bed017 Bmr001 Bmr002 Bmr005 Bmr007 Bmr009 Bmr010 Bmr011 Bmr012 Bmr013 Bmr014 Bmr018 Bmr019 Bmr021 Bmr022 Bmr024 Bmr025 Bmr026 Bmr027 Bmr029""".split(" ")
@@ -351,6 +351,9 @@ def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split
         base_df_test = pd.concat([base_df_test, temp_df], ignore_index=True)
         base_y_test = pd.concat([base_y_test, temp_y], ignore_index=True)
 
+    base_y_test = base_y_test['boundary'].tolist()
+    base_y_train = base_y_train['boundary'].tolist()
+
     return base_df_train, base_y_train, base_df_test, base_y_test
 
 
@@ -377,10 +380,8 @@ def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1])
     :returns Transformed dataframe that already contains the relevant columns. Each feature can
     """
 
-    if len(features) == 0:
-        filtered_df = dataframe.drop(['boundary'], axis=1)
-    else:
-        filtered_df = dataframe[features]
+    filtered_df = dataframe[features]
+    filtered_df = filtered_df.drop(['boundary'], axis=1)
 
     temp_df = filtered_df.add_suffix('0')
     # Doing a filter on nans, just in case
@@ -399,6 +400,7 @@ def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1])
         shifted_df = handle_nas(shifted_df)
         temp_df = pd.concat([temp_df, shifted_df], axis=1)
 
+    temp_df = temp_df.copy()
     temp_df['boundary'] = dataframe['boundary']
 
     return temp_df
