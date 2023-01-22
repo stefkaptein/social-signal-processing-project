@@ -314,6 +314,7 @@ def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split
     test_selected_meetings = list(set(dataset_list) - set(train_selected_meetings))
 
     base_df_train = pd.read_csv("../results_merged_f0_stds_fixed/" + train_selected_meetings[0] + ".csv", sep=";")
+    base_df_train.dropna(inplace=True)
     segment_boundaries_train = pd.read_csv("../topic_boundaries/" + train_selected_meetings[0] + "_topic_boundaries_lvl_"+str(subtopic_lvl)+".csv",sep=",")
 
     base_y_train = []
@@ -344,6 +345,7 @@ def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split
 
 
     base_df_test = pd.read_csv("../results_merged_f0_stds_fixed/" + test_selected_meetings[0] + ".csv", sep=";")
+    base_df_test.dropna(inplace=True)
     segment_boundaries_test = pd.read_csv("../topic_boundaries/" + test_selected_meetings[0] + "_topic_boundaries_lvl_"+str(subtopic_lvl)+".csv",sep=",")
     
     base_y_test = []
@@ -370,6 +372,8 @@ def read_in_dataset_all_together(features: list, shifts: list = [-1], test_split
 
         base_df_test = pd.concat([base_df_test, temp_df], ignore_index=True)
         base_y_test = base_y_test + base_y
+    
+    features.remove('boundary')
 
     return base_df_train, list(base_y_train), base_df_test, list(base_y_test)
 
@@ -411,8 +415,9 @@ def transform_rows(dataframe: pd.DataFrame, features: list, shifts: list = [-1])
         # There's an issue specifically with speaker change being casted. I'm just going to manually fix it
         #  up, just because that feels like it's the most logical way of going through it.
         # Shouldn't be done manually, but whatever this works
-        dtype_name_to_change = 'speakerChange' + str(elem)
-        shifted_df = shifted_df.astype({dtype_name_to_change: 'bool'})
+        if 'speakerChange' in shifted_df.columns:
+            dtype_name_to_change = 'speakerChange' + str(elem)
+            shifted_df = shifted_df.astype({dtype_name_to_change: 'bool'})
         # Way to keep the nans and keep the rows empty as relevant
         shifted_df = handle_nas(shifted_df)
         temp_df = pd.concat([temp_df, shifted_df], axis=1)
@@ -453,7 +458,7 @@ def handle_nas(df: pd.DataFrame, default_date='2020-01-01'):
 
         # string
         else:
-            df[f] = df[f].fillna('na')
+            df[f] = df[f].fillna('0')
 
     return df
 
